@@ -26,6 +26,10 @@ namespace DIPTERV.Context
                 .HasMany(e => e.FreeBlocks)
                 .WithMany();
 
+            modelBuilder.Entity<TimeBlock>()
+                .HasIndex(tb => new { tb.Day, tb.LessonNumber })
+                .IsUnique();
+
             modelBuilder.Entity<Course>()
                 .HasOne(x => x.Room)
                 .WithMany()

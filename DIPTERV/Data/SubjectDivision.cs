@@ -12,6 +12,7 @@ namespace DIPTERV.Data
     public class SubjectDivision
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
         static int nextId = 0;
 

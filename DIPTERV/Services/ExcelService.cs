@@ -55,6 +55,11 @@ namespace DIPTERV.Services
                             var t_end = t_ews.Dimension.End;
                             var r_end = r_ews.Dimension.End;
 
+                            for (int col = 3; col <= t_end.Column; col++)
+                            {
+                                TimeBlocks.Add(new TimeBlock(GetDay(t_ews.Cells[1, col].Text), Int32.Parse(t_ews.Cells[2, col].Text)));
+                            }
+
                             //Teachers and SchoolClasses
                             for (int row = 3; row <= t_end.Row; row++)
                             {
@@ -66,22 +71,17 @@ namespace DIPTERV.Services
                                 var free_tb = new List<TimeBlock>();
                                 for (int col = 3; col <= t_end.Column; col++)
                                 {
-                                    var actTB = new TimeBlock(GetDay(t_ews.Cells[1, col].Text), Int32.Parse(t_ews.Cells[2, col].Text));
                                     //per Teacher
                                     if (t_ews.Cells[row, col].Value == null)
-                                        free_tb.Add(actTB);
-                                        
+                                        free_tb.Add(TimeBlocks[col - 3]);
                                     //free_tb.Add(new TimeBlock(GetDay(t_ews.Cells[1, col].Text), Int32.Parse(t_ews.Cells[2, col].Text)));
-                                    //all - once
-                                    if (row == 3)
-                                        TimeBlocks.Add(actTB);
                                 }
 
                                 var act_teacher = new Teacher(t_name, free_tb);
                                 Teachers.Add(act_teacher);
 
                                 //test database
-                                _teacherRepo.InsertTeacherAsync(act_teacher);
+                                //await _teacherRepo.InsertTeacherAsync(act_teacher);
 
                                 //SchoolClasses
                                 if (t_ews.Cells[row, 2].Value != null)
@@ -122,6 +122,7 @@ namespace DIPTERV.Services
                             }
 
                             Console.WriteLine("SubjectDivisions have been read.");
+                            await _teacherRepo.InsertAllTeacherAsync(Teachers.ToArray());
                         }
                     }
                 }

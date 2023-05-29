@@ -1,7 +1,6 @@
 ﻿using DIPTERV.Context;
 using DIPTERV.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace DIPTERV.Repositories
 {
@@ -28,7 +27,16 @@ namespace DIPTERV.Repositories
         public async Task InsertTeacherAsync(Teacher teacher)
         {
             using var context = _factory.CreateDbContext();
-            context.Add(teacher);
+            await context.Teachers.AddAsync(teacher);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task InsertAllTeacherAsync(Teacher[] teachers)
+        {
+            using var context = _factory.CreateDbContext();
+
+            context.Teachers.AddRange(teachers);
+
             await context.SaveChangesAsync();
         }
     }

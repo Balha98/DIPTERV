@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DIPTERV.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230529155008_Init")]
+    [Migration("20230529162648_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -28,10 +28,7 @@ namespace DIPTERV.Migrations
             modelBuilder.Entity("DIPTERV.Data.Course", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
@@ -56,10 +53,7 @@ namespace DIPTERV.Migrations
             modelBuilder.Entity("DIPTERV.Data.Room", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -76,10 +70,7 @@ namespace DIPTERV.Migrations
             modelBuilder.Entity("DIPTERV.Data.SchoolClass", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("HeadMasterId")
                         .HasColumnType("int");
@@ -98,10 +89,7 @@ namespace DIPTERV.Migrations
             modelBuilder.Entity("DIPTERV.Data.SubjectDivision", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("SchoolClassId")
                         .HasColumnType("int");
@@ -125,10 +113,7 @@ namespace DIPTERV.Migrations
             modelBuilder.Entity("DIPTERV.Data.Teacher", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("CourseNumber")
                         .HasColumnType("int");
@@ -145,10 +130,7 @@ namespace DIPTERV.Migrations
             modelBuilder.Entity("DIPTERV.Data.TimeBlock", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("Day")
                         .HasColumnType("int");
