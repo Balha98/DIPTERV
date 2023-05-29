@@ -1,6 +1,10 @@
 ﻿@page "/fetchdata"
 @using DIPTERV.Data
+@using DIPTERV.Context
+@using Microsoft.EntityFrameworkCore
+
 @inject WeatherForecastService ForecastService
+@inject IDbContextFactory<ApplicationDbContext> Context
 
 <PageTitle>Weather forecast</PageTitle>
 
@@ -37,11 +41,17 @@ else
     </table>
 }
 
+using var context = new MyContext();
+
+return await context.MyEntities.ToListAsync();
+
 @code {
     private WeatherForecast[]? forecasts;
 
     protected override async Task OnInitializedAsync()
     {
+        //using var context = Context.CreateDbContext();
+        //forecasts = await context.Forecasts.ToArryAsync();
         forecasts = await ForecastService.GetForecastAsync(DateOnly.FromDateTime(DateTime.Now));
     }
 }

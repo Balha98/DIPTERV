@@ -44,7 +44,7 @@ namespace DIPTERV.Migrations
 
                     b.HasIndex("TimeBlockId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("DIPTERV.Data.Room", b =>
@@ -61,7 +61,7 @@ namespace DIPTERV.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("DIPTERV.Data.SchoolClass", b =>
@@ -80,7 +80,7 @@ namespace DIPTERV.Migrations
 
                     b.HasIndex("HeadMasterId");
 
-                    b.ToTable("SchoolClasses");
+                    b.ToTable("SchoolClasses", (string)null);
                 });
 
             modelBuilder.Entity("DIPTERV.Data.SubjectDivision", b =>
@@ -104,7 +104,7 @@ namespace DIPTERV.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("SubjectDivisions");
+                    b.ToTable("SubjectDivisions", (string)null);
                 });
 
             modelBuilder.Entity("DIPTERV.Data.Teacher", b =>
@@ -121,7 +121,7 @@ namespace DIPTERV.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Teachers");
+                    b.ToTable("Teachers", (string)null);
                 });
 
             modelBuilder.Entity("DIPTERV.Data.TimeBlock", b =>
@@ -137,7 +137,7 @@ namespace DIPTERV.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TimeBlocks");
+                    b.ToTable("TimeBlocks", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -354,7 +354,7 @@ namespace DIPTERV.Migrations
 
                     b.HasIndex("TeacherID");
 
-                    b.ToTable("TeacherTimeBlock");
+                    b.ToTable("TeacherTimeBlock", (string)null);
                 });
 
             modelBuilder.Entity("DIPTERV.Data.Course", b =>

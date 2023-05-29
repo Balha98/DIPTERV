@@ -1,7 +1,46 @@
 ﻿@page "/teachers"
+@using DIPTERV.Context;
+@using DIPTERV.Data
+@using DIPTERV.Services;
+@using Microsoft.EntityFrameworkCore
 
-<h3>Teachers</h3>
+@inject TeacherService teacherService
+@inject IDbContextFactory<ApplicationDbContext> ContextFactory
+
+<PageTitle>Teachers</PageTitle>
+
+
+@if (teachers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>CourseNumber</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var teacher in teachers)
+            {
+                <tr>
+                    <td>@teacher.ID</td>
+                    <td>@teacher.Name</td>
+                    <td>@teacher.CourseNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 @code {
-
+    private Teacher[]? teachers;
+    protected override async Task OnInitializedAsync()
+    {
+        teachers = await teacherService.GetTeachersAsync();
+    }
 }

@@ -1,0 +1,58 @@
+@page "/fileupload"
+@using DIPTERV.Context;
+@using DIPTERV.Data
+@using DIPTERV.Services;
+@using Microsoft.EntityFrameworkCore
+
+@inject TeacherService teacherService
+@inject IDbContextFactory<ApplicationDbContext> ContextFactory
+
+<PageTitle>File Upload</PageTitle>
+
+<RadzenCard>
+    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Manual Upload</RadzenText>
+    <RadzenUpload @ref="upload" Auto="false" Multiple="true" Url="upload/multiple" Change=@(args => OnChange(args, "Manual Upload"))
+            Progress=@(args => OnProgress(args, "Manual Upload")) class="w-100" />
+    <RadzenButton Text="Upload" Click=@(args => upload.Upload()) class="d-block mt-4" />
+</RadzenCard>
+<EventConsole @ref=@console />
+
+@code {
+    private Teacher[]? teachers;
+    protected override async Task OnInitializedAsync()
+    {
+        teachers = await teacherService.GetTeachersAsync();
+    }
+
+    EventConsole console;
+    RadzenUpload upload;
+    int progress;
+    bool showProgress;
+    bool showComplete;
+    string completionMessage;
+    bool cancelUpload = false;
+
+    void OnChange(UploadChangeEventArgs args, string name)
+    {
+        foreach (var file in args.Files)
+        {
+            console.Log($"File: {file.Name} / {file.Size} bytes");
+        }
+
+        console.Log($"{name} changed");
+    }
+
+    void OnProgress(UploadProgressArgs args, string name)
+    {
+        console.Log($"{args.Progress}% '{name}' / {args.Loaded} of {args.Total} bytes.");
+
+        if (args.Progress == 100)
+        {
+            foreach (var file in args.Files)
+            {
+                console.Log($"Uploaded: {file.Name} / {file.Size} bytes");
+            }
+        }
+    }
+
+}
