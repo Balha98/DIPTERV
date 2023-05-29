@@ -33,9 +33,17 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
+//add repositories
 builder.Services.AddScoped<TeacherRepository>();
-builder.Services.AddScoped<TeacherService>();
+builder.Services.AddScoped<SubjectDivisionRepository>();
+builder.Services.AddScoped<SchoolClassRepository>();
+builder.Services.AddScoped<RoomRepository>();
+builder.Services.AddScoped<CourseRepository>();
+builder.Services.AddScoped<TimeBlockRepository>();
 
+
+//add services
+builder.Services.AddScoped<TeacherService>();
 builder.Services.AddScoped<ExcelService>();
 
 //Swagger services

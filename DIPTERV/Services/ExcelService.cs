@@ -10,11 +10,11 @@ namespace DIPTERV.Services
 {
     public class ExcelService
     {
-        private readonly TeacherRepository _teacherRepo;
 
-        public ExcelService(TeacherRepository teacherRepo)
+        private readonly IDbContextFactory<ApplicationDbContext> _factory;
+        public ExcelService(IDbContextFactory<ApplicationDbContext> factory)
         {
-            _teacherRepo = teacherRepo;
+            _factory = factory;
         }
 
         public static List<Teacher> Teachers { get; set; }
@@ -122,7 +122,32 @@ namespace DIPTERV.Services
                             }
 
                             Console.WriteLine("SubjectDivisions have been read.");
-                            await _teacherRepo.InsertAllTeacherAsync(Teachers.ToArray());
+
+                            using (var context = _factory.CreateDbContext())
+                            {
+                                //Delete existing data
+                                var table = context.Set<TimeBlock>();
+                                table.RemoveRange(table);
+                                var table1 = context.Set<Teacher>();
+                                table1.RemoveRange(table1);
+                                var table2 = context.Set<SubjectDivision>();
+                                table2.RemoveRange(table2);
+                                var table3 = context.Set<SchoolClass>();
+                                table3.RemoveRange(table3);
+                                var table4 = context.Set<Room>();
+                                table4.RemoveRange(table4);
+                                var table5 = context.Set<Course>();
+                                table5.RemoveRange(table5);
+                                context.Database.ExecuteSqlRaw("DELETE FROM TeacherTimeBlock");
+                                context.SaveChanges();
+                                
+                                //add new data
+                                await context.SubjectDivisions.AddRangeAsync(SubjectDivisions.ToArray());
+                                await context.Rooms.AddRangeAsync(Rooms.ToArray());
+                                await context.Teachers.AddRangeAsync(Teachers.ToArray());
+                                await context.SaveChangesAsync();
+                            }
+
                         }
                     }
                 }
