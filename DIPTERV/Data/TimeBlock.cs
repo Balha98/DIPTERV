@@ -21,7 +21,6 @@ namespace DIPTERV.Data
     public class TimeBlock : IEquatable<TimeBlock>, IComparable<TimeBlock>
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
         static int nextId = 0;
         public Day Day { get; set; }

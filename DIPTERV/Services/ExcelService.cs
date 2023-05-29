@@ -1,12 +1,21 @@
-﻿using DIPTERV.Data;
+﻿using DIPTERV.Context;
+using DIPTERV.Data;
 using DIPTERV.Pages;
+using DIPTERV.Repositories;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 
 namespace DIPTERV.Services
 {
     public class ExcelService
     {
+        private readonly TeacherRepository _teacherRepo;
+
+        public ExcelService(TeacherRepository teacherRepo)
+        {
+            _teacherRepo = teacherRepo;
+        }
 
         public static List<Teacher> Teachers { get; set; }
 
@@ -17,7 +26,7 @@ namespace DIPTERV.Services
 
         public static List<TimeBlock> TimeBlocks { get; set; }
 
-        async Task ImportExcelFileAsync(InputFileChangeEventArgs e)
+        public async Task ImportExcelFileAsync(InputFileChangeEventArgs e)
         {
             foreach (var file in e.GetMultipleFiles(1))
             {
@@ -61,6 +70,7 @@ namespace DIPTERV.Services
                                     //per Teacher
                                     if (t_ews.Cells[row, col].Value == null)
                                         free_tb.Add(actTB);
+                                        
                                     //free_tb.Add(new TimeBlock(GetDay(t_ews.Cells[1, col].Text), Int32.Parse(t_ews.Cells[2, col].Text)));
                                     //all - once
                                     if (row == 3)
@@ -69,6 +79,9 @@ namespace DIPTERV.Services
 
                                 var act_teacher = new Teacher(t_name, free_tb);
                                 Teachers.Add(act_teacher);
+
+                                //test database
+                                _teacherRepo.InsertTeacherAsync(act_teacher);
 
                                 //SchoolClasses
                                 if (t_ews.Cells[row, 2].Value != null)

@@ -4,55 +4,22 @@
 @using DIPTERV.Services;
 @using Microsoft.EntityFrameworkCore
 
-@inject TeacherService teacherService
-@inject IDbContextFactory<ApplicationDbContext> ContextFactory
+@inject ExcelService excelService
 
 <PageTitle>File Upload</PageTitle>
 
-<RadzenCard>
-    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Manual Upload</RadzenText>
-    <RadzenUpload @ref="upload" Auto="false" Multiple="true" Url="upload/multiple" Change=@(args => OnChange(args, "Manual Upload"))
-            Progress=@(args => OnProgress(args, "Manual Upload")) class="w-100" />
-    <RadzenButton Text="Upload" Click=@(args => upload.Upload()) class="d-block mt-4" />
+<RadzenCard Style="width: 320px">
+    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Tantárgyfelosztás feltöltése</RadzenText>
+    <InputFile OnChange="@UploadFileAsync" />
 </RadzenCard>
-<EventConsole @ref=@console />
 
 @code {
-    private Teacher[]? teachers;
-    protected override async Task OnInitializedAsync()
+
+    private async void UploadFileAsync(InputFileChangeEventArgs e)
     {
-        teachers = await teacherService.GetTeachersAsync();
+        await excelService.ImportExcelFileAsync(e);
     }
 
-    EventConsole console;
-    RadzenUpload upload;
-    int progress;
-    bool showProgress;
-    bool showComplete;
-    string completionMessage;
-    bool cancelUpload = false;
-
-    void OnChange(UploadChangeEventArgs args, string name)
-    {
-        foreach (var file in args.Files)
-        {
-            console.Log($"File: {file.Name} / {file.Size} bytes");
-        }
-
-        console.Log($"{name} changed");
-    }
-
-    void OnProgress(UploadProgressArgs args, string name)
-    {
-        console.Log($"{args.Progress}% '{name}' / {args.Loaded} of {args.Total} bytes.");
-
-        if (args.Progress == 100)
-        {
-            foreach (var file in args.Files)
-            {
-                console.Log($"Uploaded: {file.Name} / {file.Size} bytes");
-            }
-        }
-    }
+  
 
 }

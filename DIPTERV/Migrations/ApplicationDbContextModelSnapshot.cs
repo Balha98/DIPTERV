@@ -25,7 +25,10 @@ namespace DIPTERV.Migrations
             modelBuilder.Entity("DIPTERV.Data.Course", b =>
                 {
                     b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
@@ -44,13 +47,16 @@ namespace DIPTERV.Migrations
 
                     b.HasIndex("TimeBlockId");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("DIPTERV.Data.Room", b =>
                 {
                     b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -61,13 +67,16 @@ namespace DIPTERV.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Rooms", (string)null);
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("DIPTERV.Data.SchoolClass", b =>
                 {
                     b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("HeadMasterId")
                         .HasColumnType("int");
@@ -80,13 +89,16 @@ namespace DIPTERV.Migrations
 
                     b.HasIndex("HeadMasterId");
 
-                    b.ToTable("SchoolClasses", (string)null);
+                    b.ToTable("SchoolClasses");
                 });
 
             modelBuilder.Entity("DIPTERV.Data.SubjectDivision", b =>
                 {
                     b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("SchoolClassId")
                         .HasColumnType("int");
@@ -104,13 +116,16 @@ namespace DIPTERV.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("SubjectDivisions", (string)null);
+                    b.ToTable("SubjectDivisions");
                 });
 
             modelBuilder.Entity("DIPTERV.Data.Teacher", b =>
                 {
                     b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("CourseNumber")
                         .HasColumnType("int");
@@ -121,13 +136,16 @@ namespace DIPTERV.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Teachers", (string)null);
+                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("DIPTERV.Data.TimeBlock", b =>
                 {
                     b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("Day")
                         .HasColumnType("int");
@@ -137,7 +155,7 @@ namespace DIPTERV.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TimeBlocks", (string)null);
+                    b.ToTable("TimeBlocks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -354,7 +372,7 @@ namespace DIPTERV.Migrations
 
                     b.HasIndex("TeacherID");
 
-                    b.ToTable("TeacherTimeBlock", (string)null);
+                    b.ToTable("TeacherTimeBlock");
                 });
 
             modelBuilder.Entity("DIPTERV.Data.Course", b =>

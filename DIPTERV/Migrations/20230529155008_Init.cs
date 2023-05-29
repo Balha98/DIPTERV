@@ -54,7 +54,8 @@ namespace DIPTERV.Migrations
                 name: "Rooms",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Subject = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -67,7 +68,8 @@ namespace DIPTERV.Migrations
                 name: "Teachers",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CourseNumber = table.Column<int>(type: "int", nullable: false)
                 },
@@ -80,7 +82,8 @@ namespace DIPTERV.Migrations
                 name: "TimeBlocks",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Day = table.Column<int>(type: "int", nullable: false),
                     LessonNumber = table.Column<int>(type: "int", nullable: false)
                 },
@@ -199,7 +202,8 @@ namespace DIPTERV.Migrations
                 name: "SchoolClasses",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HeadMasterId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -241,7 +245,8 @@ namespace DIPTERV.Migrations
                 name: "SubjectDivisions",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
                     Subject = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SchoolClassId = table.Column<int>(type: "int", nullable: false)
@@ -265,7 +270,8 @@ namespace DIPTERV.Migrations
                 name: "Courses",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoomId = table.Column<int>(type: "int", nullable: false),
                     SubjectDivisinId = table.Column<int>(type: "int", nullable: false),
                     TimeBlockId = table.Column<int>(type: "int", nullable: false)

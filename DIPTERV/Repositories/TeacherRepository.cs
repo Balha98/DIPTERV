@@ -24,5 +24,12 @@ namespace DIPTERV.Repositories
             using var context = _factory.CreateDbContext();
             return await context.Teachers.ToArrayAsync();
         }
+
+        public async Task InsertTeacherAsync(Teacher teacher)
+        {
+            using var context = _factory.CreateDbContext();
+            context.Add(teacher);
+            await context.SaveChangesAsync();
+        }
     }
 }

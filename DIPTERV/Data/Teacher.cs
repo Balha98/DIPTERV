@@ -12,7 +12,6 @@ namespace DIPTERV.Data
     public class Teacher : IComparable<Teacher>, IEquatable<Teacher> 
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
         static int nextId = 0;
         public string Name { get; set; }
