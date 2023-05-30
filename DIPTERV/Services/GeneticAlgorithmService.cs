@@ -8,11 +8,11 @@ using OfficeOpenXml;
 
 namespace DIPTERV.Services
 {
-    public class ExcelService
+    public class GeneticAlgorithmService
     {
 
         private readonly IDbContextFactory<ApplicationDbContext> _factory;
-        public ExcelService(IDbContextFactory<ApplicationDbContext> factory)
+        public GeneticAlgorithmService(IDbContextFactory<ApplicationDbContext> factory)
         {
             _factory = factory;
         }
@@ -156,6 +156,11 @@ namespace DIPTERV.Services
                     throw;
                 }
             }
+
+        }
+
+        public async Task RunGAAsync()
+        {
 
         }
 
