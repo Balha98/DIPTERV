@@ -5,20 +5,22 @@
 @using Microsoft.EntityFrameworkCore
 
 @inject TeacherService teacherService
-
+@inject IJSRuntime jsRuntime
 
 <PageTitle>Timetable</PageTitle>
 <RadzenTabs @bind-SelectedIndex=@selectedIndex>
     <Tabs>
         <RadzenTabsItem Text="Tanár" Icon="person">
                 <p>
-                <RadzenDropDown AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value=@value Data=@teachers TextProperty="Name" ValueProperty="ID" Placeholder="Válassz ki egy tanárt!"></RadzenDropDown>
+                <RadzenDropDown AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value=@value Data=@teachers TextProperty="Name" ValueProperty="ID" Placeholder="Válassz ki egy tanárt!"  ></RadzenDropDown>
                  </p>
             @if (value == -1)
             { }
             else
             {
+                <div @key="value">
                 <CourseCard teacherId="value">  </CourseCard>
+                </div>
 
              }
                  </RadzenTabsItem>
@@ -45,6 +47,5 @@
         //var schoolClasses = await schoolService.GetAllSchoolClassesAsync();
         //schoolClassNames = schoolClasses.Select(t => t.Name).Distinct();
     }
-
 
 }
