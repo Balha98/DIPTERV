@@ -1,0 +1,63 @@
+@using DIPTERV.Context;
+@using DIPTERV.Data
+@using DIPTERV.Services;
+@using Microsoft.EntityFrameworkCore
+
+@inject TimetableService timetableService
+
+@if (courses == null)
+{
+    <p><em>Loading...</em></p>
+}
+
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Hétfõ</th>
+                <th>Kedd</th>
+                <th>Szerda</th>
+                <th>Csütörtök</th>
+                <th>Péntek</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var row = 0; row < 6; row++)
+            {
+                <tr>
+                    <td>@(row + 1)</td>
+                    @for (var col = 0; col < 5; col++)
+                    {
+                        <td>
+                                @foreach (var c in courses)
+                                {
+                                    @if (c.TimeBlockId == ((col * 5) + row))
+                                    {
+                                     <RadzenCard>
+                                        Tantárgyfelosztás: @c.SubjectDivisinId    
+                                        Tanterem: @c.RoomId
+                                    </RadzenCard>
+                                    }
+                                }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+
+@code {
+    [Parameter] public int teacherId { get; set; }
+
+    Course[] courses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        courses = await timetableService.GetCoursesByTeacherIDAsync(teacherId);
+    }
+}

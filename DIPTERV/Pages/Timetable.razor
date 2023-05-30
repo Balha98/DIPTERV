@@ -1,0 +1,50 @@
+@page "/timetable"
+@using DIPTERV.Context;
+@using DIPTERV.Data
+@using DIPTERV.Services;
+@using Microsoft.EntityFrameworkCore
+
+@inject TeacherService teacherService
+
+
+<PageTitle>Timetable</PageTitle>
+<RadzenTabs @bind-SelectedIndex=@selectedIndex>
+    <Tabs>
+        <RadzenTabsItem Text="Tanár" Icon="person">
+                <p>
+                <RadzenDropDown AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value=@value Data=@teachers TextProperty="Name" ValueProperty="ID" Placeholder="Válassz ki egy tanárt!"></RadzenDropDown>
+                 </p>
+            @if (value == -1)
+            { }
+            else
+            {
+                <CourseCard teacherId="value">  </CourseCard>
+
+             }
+                 </RadzenTabsItem>
+        <RadzenTabsItem Text="Osztály" Icon="groups">
+            <p>Válassz ki egy osztályt! </p>
+            @*<RadzenDropDown TValue="string" Change="@(args => value = $"{args}")"></RadzenDropDown>*@
+        </RadzenTabsItem>
+        <RadzenTabsItem Text="Tanterem" Icon="meeting_room">
+            <p>Válassz ki egy tantermet! </p>
+        </RadzenTabsItem>
+    </Tabs>
+</RadzenTabs>
+
+@code{
+    int selectedIndex = 0;
+    Teacher[] teachers;
+
+    int value = -1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        teachers = await teacherService.GetAllTeachersAsync();
+
+        //var schoolClasses = await schoolService.GetAllSchoolClassesAsync();
+        //schoolClassNames = schoolClasses.Select(t => t.Name).Distinct();
+    }
+
+
+}

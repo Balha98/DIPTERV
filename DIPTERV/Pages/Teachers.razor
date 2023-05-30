@@ -6,8 +6,6 @@
 
 @inject TeacherService teacherService
 
-
-
 <PageTitle>Teachers</PageTitle>
 
 
@@ -55,7 +53,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        teachers = await teacherService.GetTeachersAsync();
+        teachers = await teacherService.GetAllTeachersAsync();
         
     }
 

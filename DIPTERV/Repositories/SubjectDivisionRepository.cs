@@ -18,6 +18,18 @@ namespace DIPTERV.Repositories
             return await context.SubjectDivisions.ToArrayAsync();
         }
 
+        public async Task<SubjectDivision> GetSubjectDivisionbyIDAsync(int id)
+        {
+            using var context = _factory.CreateDbContext();
+            return await context.SubjectDivisions.Include(sd => sd.Teacher).Include(sd => sd.SchoolClass).Where(sd => sd.ID == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<SubjectDivision[]> GetSubjectDivisionbyIDsAsync(int[] ids)
+        {
+            using var context = _factory.CreateDbContext();
+            return await context.SubjectDivisions.Include(sd => sd.Teacher).Where(sd => ids.Contains(sd.ID)).ToArrayAsync();
+        }
+
         public async Task InsertAllSubjectDivisionAsync(SubjectDivision[] subjectDivisions)
         {
             using var context = _factory.CreateDbContext();

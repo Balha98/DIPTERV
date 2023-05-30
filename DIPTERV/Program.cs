@@ -46,6 +46,7 @@ builder.Services.AddScoped<TimeBlockRepository>();
 builder.Services.AddScoped<TeacherService>();
 builder.Services.AddScoped<GeneticAlgorithmService>();
 builder.Services.AddScoped<FreeBlockService>();
+builder.Services.AddScoped<TimetableService>();
 
 //Swagger services
 /*

@@ -5,21 +5,22 @@ namespace DIPTERV.Services
 {
     public class TeacherService
     {
-        private readonly TeacherRepository _repository;
+        private readonly TeacherRepository _repo;
 
         public TeacherService(TeacherRepository repository)
         {
-            _repository = repository;
+            _repo = repository;
         }
 
         public async Task<Teacher> GetTeacherByIdAsync(int id)
         {
-            return await _repository.GetTeacherByIdAsync(id);
+            return await _repo.GetTeacherByIdAsync(id);
         }
 
-        public async Task<Teacher[]> GetTeachersAsync()
+        public async Task<Teacher[]> GetAllTeachersAsync()
         {
-            return await _repository.GetAllTeacherAsync();
+            return await _repo.GetAllTeacherAsync();
         }
+
     }
 }
