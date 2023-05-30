@@ -21,10 +21,15 @@ namespace DIPTERV.Repositories
         public async Task InsertAllCoursesAsync(Course[] courses)
         {
             using var context = _factory.CreateDbContext();
-
             context.Courses.AddRange(courses);
-
             await context.SaveChangesAsync();
+            
+        }
+
+        public async Task DeleteAllCoursesAsync()
+        {
+            using var context = _factory.CreateDbContext();
+            await context.Database.ExecuteSqlRawAsync("DELETE FROM Courses");
         }
     }
 }

@@ -33,7 +33,6 @@ namespace DIPTERV.Data
             ID = nextId++;
         }
 
-
         /// <summary>
         /// EF constructor
         /// </summary>

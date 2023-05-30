@@ -24,7 +24,7 @@ namespace DIPTERV.Logic
             _teachers = teachers;
         }
 
-        public void RunGA()
+        public List<Course> RunGA()
     {
         var selection = new TournamentSelection();
         var crossover = new UniformCrossover(); // megvizsgálni, van-e jobb
@@ -74,10 +74,14 @@ namespace DIPTERV.Logic
              */
 
             PrintSchedule(ga.BestChromosome);
-        fitness.PrintAllEvaluate(ga.BestChromosome);
+            fitness.PrintAllEvaluate(ga.BestChromosome);
             Console.WriteLine($"Best solution found has fitness: {ga.BestChromosome.Fitness}");
 
-            Console.ReadKey();
+            //return courses
+            List<Course> courses = new List<Course>();
+            foreach (var i in ga.BestChromosome.GetGenes())
+                courses.Add((Course)i.Value);
+            return courses;
         }
 
 

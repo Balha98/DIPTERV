@@ -4,22 +4,30 @@
 @using DIPTERV.Services;
 @using Microsoft.EntityFrameworkCore
 
-@inject GeneticAlgorithmService excelService
+@inject GeneticAlgorithmService gaService
 
 <PageTitle>File Upload</PageTitle>
 
 <RadzenCard Style="width: 320px">
-    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Tantárgyfelosztás feltöltése</RadzenText>
+    Tantárgyfelosztás feltöltése
     <InputFile OnChange="@UploadFileAsync" />
 </RadzenCard>
+<RadzenCard>
+    Órarend készítése
+    <RadzenButton Variant="Variant.Flat" Click=@(args => AlgStartAsync()) Text="Algoritmus indítása" ButtonStyle="ButtonStyle.Primary" />
+</RadzenCard>
+            
 
 @code {
 
     private async void UploadFileAsync(InputFileChangeEventArgs e)
     {
-        await excelService.ImportExcelFileAsync(e);
+        await gaService.ImportExcelFileAsync(e);
+    }
+    private async void AlgStartAsync()
+    {
+        await gaService.RunGAAsync();
     }
 
   
-
 }

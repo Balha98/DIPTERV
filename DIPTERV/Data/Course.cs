@@ -17,15 +17,15 @@ namespace DIPTERV.Data
         static int nextId = 0;
 
         public int RoomId { get; set; }
-        [ForeignKey("RoomId")]
+        [NotMapped]
         public Room Room { get; set; }
 
         public int SubjectDivisinId { get; set; }
-        [ForeignKey("SubjectDivisinId")]
+        [NotMapped]
         public SubjectDivision SubjectDivision { get; set; }
 
         public int TimeBlockId { get; set; }
-        [ForeignKey("TimeBlockId")]
+        [NotMapped]
         public TimeBlock TimeBlock { get; set; }
 
         public Course(Room room, SubjectDivision sd, TimeBlock tb)
@@ -38,7 +38,7 @@ namespace DIPTERV.Data
             TimeBlockId = tb.ID; ;
             ID = nextId++;
         }
-
+        
         public Course() { }
 
     }

@@ -1,5 +1,6 @@
 ﻿using DIPTERV.Context;
 using DIPTERV.Data;
+using DIPTERV.Logic;
 using DIPTERV.Pages;
 using DIPTERV.Repositories;
 using Microsoft.AspNetCore.Components.Forms;
@@ -12,9 +13,12 @@ namespace DIPTERV.Services
     {
 
         private readonly IDbContextFactory<ApplicationDbContext> _factory;
-        public GeneticAlgorithmService(IDbContextFactory<ApplicationDbContext> factory)
+
+        CourseRepository _courseRepo;
+        public GeneticAlgorithmService(IDbContextFactory<ApplicationDbContext> factory, CourseRepository courseRepository)
         {
             _factory = factory;
+            _courseRepo = courseRepository;
         }
 
         public static List<Teacher> Teachers { get; set; }
@@ -55,6 +59,9 @@ namespace DIPTERV.Services
                             var t_end = t_ews.Dimension.End;
                             var r_end = r_ews.Dimension.End;
 
+
+                           
+                            
                             for (int col = 3; col <= t_end.Column; col++)
                             {
                                 TimeBlocks.Add(new TimeBlock(GetDay(t_ews.Cells[1, col].Text), Int32.Parse(t_ews.Cells[2, col].Text)));
@@ -66,7 +73,7 @@ namespace DIPTERV.Services
                                 //Teacher's name
                                 string t_name = t_ews.Cells[row, 1].Text.Trim();
 
-
+                                
                                 //Free and All Timeblocks for teacher
                                 var free_tb = new List<TimeBlock>();
                                 for (int col = 3; col <= t_end.Column; col++)
@@ -76,12 +83,9 @@ namespace DIPTERV.Services
                                         free_tb.Add(TimeBlocks[col - 3]);
                                     //free_tb.Add(new TimeBlock(GetDay(t_ews.Cells[1, col].Text), Int32.Parse(t_ews.Cells[2, col].Text)));
                                 }
-
-                                var act_teacher = new Teacher(t_name, free_tb);
+                                                   
+                                    var act_teacher = new Teacher(t_name, free_tb);
                                 Teachers.Add(act_teacher);
-
-                                //test database
-                                //await _teacherRepo.InsertTeacherAsync(act_teacher);
 
                                 //SchoolClasses
                                 if (t_ews.Cells[row, 2].Value != null)
@@ -161,7 +165,11 @@ namespace DIPTERV.Services
 
         public async Task RunGAAsync()
         {
-
+            var sga = new ScheduleGeneticAlgorithm(Rooms, SubjectDivisions, TimeBlocks, Teachers);
+            var courses = sga.RunGA().ToArray();
+            await _courseRepo.DeleteAllCoursesAsync();
+            await _courseRepo.InsertAllCoursesAsync(courses);
+            return;
         }
 
         private static void Init()

@@ -25,32 +25,11 @@ namespace DIPTERV.Context
             modelBuilder.Entity<Teacher>()
                 .HasMany(e => e.FreeBlocks)
                 .WithMany();
-
+            /*
             modelBuilder.Entity<TimeBlock>()
                 .HasIndex(tb => new { tb.Day, tb.LessonNumber })
                 .IsUnique();
-
-            modelBuilder.Entity<Course>()
-                .HasOne(x => x.Room)
-                .WithMany()
-                .HasForeignKey(x=> x.RoomId)
-                .OnDelete(DeleteBehavior.NoAction)
-                .IsRequired();
-
-            modelBuilder.Entity<Course>()
-            .HasOne(x => x.SubjectDivision)
-                .WithMany()
-                .HasForeignKey(x => x.SubjectDivisinId)
-                .OnDelete(DeleteBehavior.NoAction)
-                .IsRequired();
-
-            modelBuilder.Entity<Course>()
-            .HasOne(x => x.TimeBlock)
-                .WithMany()
-                .HasForeignKey(x => x.TimeBlockId)
-                .OnDelete(DeleteBehavior.NoAction)
-                .IsRequired();
-
+            */
             modelBuilder.Entity <SchoolClass>()
             .HasOne(x => x.HeadMaster)
                         .WithMany()

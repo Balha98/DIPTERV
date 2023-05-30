@@ -44,8 +44,11 @@ namespace DIPTERV.Logic
                 ID = geneIndex,
                 SubjectDivision = _subjectDivisions[geneIndex],
                 TimeBlock = _timeBlocks[rand.Next(0, _timeBlocks.Count)],
-                Room = _rooms[rand.Next(0, _rooms.Count)]
+                Room = _rooms[rand.Next(0, _rooms.Count)],
             };
+            course.SubjectDivisinId = course.SubjectDivision.ID;
+            course.TimeBlockId = course.TimeBlock.ID;
+            course.RoomId = course.Room.ID;
 
             return new Gene(course);
         }
