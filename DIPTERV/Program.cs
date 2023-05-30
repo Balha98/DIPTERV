@@ -45,6 +45,7 @@ builder.Services.AddScoped<TimeBlockRepository>();
 //add services
 builder.Services.AddScoped<TeacherService>();
 builder.Services.AddScoped<ExcelService>();
+builder.Services.AddScoped<FreeBlockService>();
 
 //Swagger services
 /*

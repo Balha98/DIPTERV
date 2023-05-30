@@ -16,6 +16,7 @@ namespace DIPTERV.Services
         {
             return await _repository.GetTeacherByIdAsync(id);
         }
+
         public async Task<Teacher[]> GetTeachersAsync()
         {
             return await _repository.GetAllTeacherAsync();

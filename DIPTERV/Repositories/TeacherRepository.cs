@@ -15,7 +15,7 @@ namespace DIPTERV.Repositories
         public async Task<Teacher> GetTeacherByIdAsync(int id)
         {
             using var context = _factory.CreateDbContext();
-            return await context.Teachers.FirstOrDefaultAsync(t => t.ID == id);
+            return await context.Teachers.Include(t => t.FreeBlocks).FirstOrDefaultAsync(t => t.ID == id);
         }
 
         public async Task<Teacher[]> GetAllTeacherAsync()

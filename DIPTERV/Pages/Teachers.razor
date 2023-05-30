@@ -1,10 +1,11 @@
-﻿@page "/teachers"
+@page "/teachers"
 @using DIPTERV.Context;
 @using DIPTERV.Data
 @using DIPTERV.Services;
 @using Microsoft.EntityFrameworkCore
 
 @inject TeacherService teacherService
+
 
 
 <PageTitle>Teachers</PageTitle>
@@ -19,9 +20,10 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>CourseNumber</th>
+                <th>Azonosító</th>
+                <th>Név</th>
+                <th>Heti óraszám</th>
+                <th>Elérhetőség</th>
             </tr>
         </thead>
         <tbody>
@@ -31,16 +33,35 @@ else
                     <td>@teacher.ID</td>
                     <td>@teacher.Name</td>
                     <td>@teacher.CourseNumber</td>
+                    <td>
+                       @* <!-- <RadzenButton ButtonStyle="Radzen.ButtonStyle.Info" ButtonType="Radzen.ButtonType.Button" Icon="event_busy" IsBusy="false" Shade="Radzen.Shade.Lighter" Variant="Radzen.Variant.Filled" Style="position: static; width: 88px" Click="@(() => ButtonClick(teacher))"></RadzenButton> --> *@
+                        <button @onclick="@(() => ButtonClick(teacher))">Megtekint</button>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
 }
 
+@if (showingBusyDialog)
+{
+    <TeacherBusy teacher="actTeacher" />
+}
+
 @code {
     private Teacher[]? teachers;
+    bool showingBusyDialog;
+    Teacher actTeacher;
+
     protected override async Task OnInitializedAsync()
     {
         teachers = await teacherService.GetTeachersAsync();
+        
+    }
+
+    protected void ButtonClick(Teacher teacher)
+    {
+        actTeacher = teacher;
+        showingBusyDialog= true;
     }
 }
