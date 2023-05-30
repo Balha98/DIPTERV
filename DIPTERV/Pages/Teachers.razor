@@ -43,7 +43,9 @@ else
 
 @if (showingBusyDialog)
 {
-    <TeacherBusy teacher="actTeacher" />
+    <TeacherBusy 
+        teacher="actTeacher"
+        OnOK="OnOK" />
 }
 
 @code {
@@ -61,5 +63,10 @@ else
     {
         actTeacher = teacher;
         showingBusyDialog= true;
+    }
+
+    public void OnOK()
+    {
+        showingBusyDialog = false;
     }
 }
