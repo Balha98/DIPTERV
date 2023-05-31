@@ -12,7 +12,7 @@ namespace DIPTERV.Repositories
             _factory = factory;
         }
 
-        public async Task<SchoolClass[]> GetAllSchoolClassAsync()
+        public async Task<SchoolClass[]> GetAllSchoolClassesAsync()
         {
             using var context = _factory.CreateDbContext();
             return await context.SchoolClasses.ToArrayAsync();

@@ -44,6 +44,9 @@ builder.Services.AddScoped<TimeBlockRepository>();
 
 //add services
 builder.Services.AddScoped<TeacherService>();
+builder.Services.AddScoped<SubjectDivisionService>();
+builder.Services.AddScoped<RoomService>();
+builder.Services.AddScoped<SchoolClassService>();
 builder.Services.AddScoped<GeneticAlgorithmService>();
 builder.Services.AddScoped<FreeBlockService>();
 builder.Services.AddScoped<TimetableService>();

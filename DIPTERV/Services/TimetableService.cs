@@ -11,14 +11,16 @@ namespace DIPTERV.Services
         private readonly TimeBlockRepository _timeBlockRepo;
         private readonly CourseRepository _courseRepo;
         private readonly SubjectDivisionRepository _subjectDivisionRepo;
+        private readonly RoomRepository _roomRepo;
 
 
-        public TimetableService(CourseRepository courseRepository, TimeBlockRepository timeBlockRepository, TeacherRepository teacherRepository, SubjectDivisionRepository subjectDivisionRepository)
+        public TimetableService(CourseRepository courseRepository, TimeBlockRepository timeBlockRepository, TeacherRepository teacherRepository, SubjectDivisionRepository subjectDivisionRepository, RoomRepository roomRepository)
         {
             _courseRepo = courseRepository;
             _timeBlockRepo = timeBlockRepository;
             _teacherRepo = teacherRepository;
             _subjectDivisionRepo = subjectDivisionRepository;
+            _roomRepo = roomRepository;
         }
         public async Task<Course[]> GetCoursesByTeacherIDAsync(int teacherId)
         {
@@ -32,13 +34,19 @@ namespace DIPTERV.Services
         public async Task<Course[]> GetCoursesBySchoolClassIDAsync(int schoolClassId)
         {
             var courses = await _courseRepo.GetAllCoursesAsync();
-            return courses.Where(c => c.SubjectDivision.SchoolClassId == schoolClassId).ToArray();
+            var subjectDivisionIds = courses.Select(c => c.SubjectDivisinId).ToArray();
+            var subjectDivisions = await _subjectDivisionRepo.GetSubjectDivisionbyIDsAsync(subjectDivisionIds);
+            var correctSubjectDivisions = subjectDivisions.Where(sd => sd.SchoolClassId == schoolClassId).Select(sd => sd.ID).ToArray();
+            return courses.Where(c => correctSubjectDivisions.Contains(c.SubjectDivisinId)).ToArray();
         }
 
         public async Task<Course[]> GetCoursesByRoomIDAsync(int roomId)
         {
             var courses = await _courseRepo.GetAllCoursesAsync();
-            return courses.Where(c => c.RoomId == roomId).ToArray();
+            var roomIds = courses.Select(c => c.RoomId).ToArray();
+            var rooms = await _roomRepo.GetRoombyIDsAsync(roomIds);
+            var correctRooms = rooms.Where(r => r.ID == roomId).Select(r => r.ID).ToArray();
+            return courses.Where(c => correctRooms.Contains(c.RoomId)).ToArray();
         }
 
 

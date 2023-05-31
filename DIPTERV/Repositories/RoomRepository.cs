@@ -18,6 +18,17 @@ namespace DIPTERV.Repositories
             return await context.Rooms.ToArrayAsync();
         }
 
+        public async Task<Room> GetRoomByIdAsync(int id)
+        {
+            using var context = _factory.CreateDbContext();
+            return await context.Rooms.FirstOrDefaultAsync(t => t.ID == id);
+        }
+        public async Task<Room[]> GetRoombyIDsAsync(int[] ids)
+        {
+            using var context = _factory.CreateDbContext();
+            return await context.Rooms.Where(r => ids.Contains(r.ID)).ToArrayAsync();
+        }
+
         public async Task InsertAllRoomsAsync(Room[] rooms)
         {
             using var context = _factory.CreateDbContext();

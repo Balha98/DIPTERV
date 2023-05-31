@@ -5,7 +5,8 @@
 @using Microsoft.EntityFrameworkCore
 
 @inject TeacherService teacherService
-@inject IJSRuntime jsRuntime
+@inject RoomService roomService
+@inject SchoolClassService schoolClassService
 
 <PageTitle>Timetable</PageTitle>
 <RadzenTabs @bind-SelectedIndex=@selectedIndex>
@@ -19,17 +20,38 @@
             else
             {
                 <div @key="value">
-                <CourseCard teacherId="value">  </CourseCard>
+                <CourseCardTeacher teacherId="value">  </CourseCardTeacher>
                 </div>
 
              }
                  </RadzenTabsItem>
         <RadzenTabsItem Text="Osztály" Icon="groups">
-            <p>Válassz ki egy osztályt! </p>
-            @*<RadzenDropDown TValue="string" Change="@(args => value = $"{args}")"></RadzenDropDown>*@
+            <p>
+                <RadzenDropDown AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value=@value2 Data=@schoolClasses TextProperty="Name" ValueProperty="ID" Placeholder="Válassz ki egy osztályt!"></RadzenDropDown>
+            </p>
+            @if (value2 == -1)
+            { }
+            else
+            {
+                <div @key="value2">
+                    <CourseCardSchoolClass schoolClassId="value2">  </CourseCardSchoolClass>
+                </div>
+
+            }
         </RadzenTabsItem>
         <RadzenTabsItem Text="Tanterem" Icon="meeting_room">
-            <p>Válassz ki egy tantermet! </p>
+            <p>
+                <RadzenDropDown AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value=@value3 Data=@rooms TextProperty="Name" ValueProperty="ID" Placeholder="Válassz ki egy tantermet!"></RadzenDropDown>
+            </p>
+            @if (value3 == -1)
+            { }
+            else
+            {
+                <div @key="value3">
+                    <CourseCardRoom roomId="value3">  </CourseCardRoom>
+                </div>
+
+            }
         </RadzenTabsItem>
     </Tabs>
 </RadzenTabs>
@@ -37,15 +59,18 @@
 @code{
     int selectedIndex = 0;
     Teacher[] teachers;
+    SchoolClass[] schoolClasses;
+    Room[] rooms;
 
     int value = -1;
+    int value2 = -1;
+    int value3 = -1;
 
     protected override async Task OnInitializedAsync()
     {
         teachers = await teacherService.GetAllTeachersAsync();
-
-        //var schoolClasses = await schoolService.GetAllSchoolClassesAsync();
-        //schoolClassNames = schoolClasses.Select(t => t.Name).Distinct();
+        schoolClasses = await schoolClassService.GetAllSchoolClassesAsync();
+        rooms = await roomService.GetAllRoomsAsync();
     }
 
 }

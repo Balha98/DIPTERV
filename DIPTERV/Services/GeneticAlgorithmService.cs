@@ -138,8 +138,7 @@ namespace DIPTERV.Services
                                 table2.RemoveRange(table2);
                                 var table3 = context.Set<SchoolClass>();
                                 table3.RemoveRange(table3);
-                                var table4 = context.Set<Room>();
-                                table4.RemoveRange(table4);
+                                context.Database.ExecuteSqlRaw("DELETE FROM Rooms");
                                 var table5 = context.Set<Course>();
                                 table5.RemoveRange(table5);
                                 context.Database.ExecuteSqlRaw("DELETE FROM TeacherTimeBlock");

@@ -1,0 +1,67 @@
+﻿@using DIPTERV.Context;
+@using DIPTERV.Data
+@using DIPTERV.Services;
+@using Microsoft.EntityFrameworkCore
+
+@inject TimetableService timetableService
+@inject SubjectDivisionService subjectDivisionService
+
+@if (courses == null)
+{
+    <p><em>Loading...</em></p>
+}
+
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Hétfő</th>
+                <th>Kedd</th>
+                <th>Szerda</th>
+                <th>Csütörtök</th>
+                <th>Péntek</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var row = 0; row < 6; row++)
+            {
+                <tr>
+                    <td>@(row + 1)</td>
+                    @for (var col = 0; col < 5; col++)
+                    {
+                        <td>
+                            @foreach (var c in courses)
+                            {
+                                @if (c.TimeBlockId == ((col * 5) + row))
+                                {
+                                    <RadzenCard Style="padding: 10px; margin: 5px; position: sticky; float: none; visibility: visible; border-radius: 20px; border: 2px dotted #212529; background-color: #efefef; text-align: center; display: inline-grid; width: 160px; height: 110px">
+                                        @subjectDivisons[c.SubjectDivisinId].Subject <br>
+                                        @subjectDivisons[c.SubjectDivisinId].Teacher.Name<br>
+                                        @String.Concat(subjectDivisons[c.SubjectDivisinId].SchoolClass.Name,". osztály")<br>
+                                    </RadzenCard>
+                                }
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+
+@code {
+    [Parameter] public int roomId { get; set; }
+
+    Course[] courses;
+    SubjectDivision[] subjectDivisons;
+
+    protected override async Task OnInitializedAsync()
+    {
+        courses = await timetableService.GetCoursesByRoomIDAsync(roomId);
+        subjectDivisons = await subjectDivisionService.GetAllSubjectDivisionsAsync();
+    }
+}

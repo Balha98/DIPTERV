@@ -4,6 +4,8 @@
 @using Microsoft.EntityFrameworkCore
 
 @inject TimetableService timetableService
+@inject SubjectDivisionService subjectDivisionService
+@inject RoomService roomService
 
 @if (courses == null)
 {
@@ -16,11 +18,11 @@ else
         <thead>
             <tr>
                 <th></th>
-                <th>Hétfõ</th>
+                <th>HÃ©tfÅ‘</th>
                 <th>Kedd</th>
                 <th>Szerda</th>
-                <th>Csütörtök</th>
-                <th>Péntek</th>
+                <th>CsÃ¼tÃ¶rtÃ¶k</th>
+                <th>PÃ©ntek</th>
             </tr>
         </thead>
         <tbody>
@@ -35,9 +37,10 @@ else
                                 {
                                     @if (c.TimeBlockId == ((col * 5) + row))
                                     {
-                                     <RadzenCard>
-                                        Tantárgyfelosztás: @c.SubjectDivisinId    
-                                        Tanterem: @c.RoomId
+                                     <RadzenCard Style="padding: 10px; margin: 5px; position: sticky; float: none; visibility: visible; border-radius: 20px; border: 2px dotted #212529; background-color: #efefef; text-align: center; display: inline-grid; width: 160px; height: 110px">
+                                        @subjectDivisons[c.SubjectDivisinId].Subject <br>
+                                        @String.Concat(subjectDivisons[c.SubjectDivisinId].SchoolClass.Name,". osztÃ¡ly")<br>
+                                        @rooms[c.RoomId].Name
                                     </RadzenCard>
                                     }
                                 }
@@ -55,9 +58,13 @@ else
     [Parameter] public int teacherId { get; set; }
 
     Course[] courses;
+    SubjectDivision[] subjectDivisons;
+    Room[] rooms;
 
     protected override async Task OnInitializedAsync()
     {
         courses = await timetableService.GetCoursesByTeacherIDAsync(teacherId);
+        subjectDivisons = await subjectDivisionService.GetAllSubjectDivisionsAsync();
+        rooms = await roomService.GetAllRoomsAsync();
     }
 }
