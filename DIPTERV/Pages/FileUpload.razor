@@ -4,7 +4,10 @@
 @using DIPTERV.Services;
 @using Microsoft.EntityFrameworkCore
 
+<RadzenNotification />
+
 @inject GeneticAlgorithmService gaService
+@inject NotificationService notificationService
 
 <PageTitle>File Upload</PageTitle>
 
@@ -19,14 +22,33 @@
             
 
 @code {
+    bool importSuccess;
+    bool runGASuccess;
+    Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
 
     private async void UploadFileAsync(InputFileChangeEventArgs e)
     {
-        await gaService.ImportExcelFileAsync(e);
+        importSuccess = await gaService.ImportExcelFileAsync(e);
+        if (importSuccess)
+            ShowNotification(new NotificationMessage() { Severity = NotificationSeverity.Success, Summary = "Sikeres importálás", Detail = "A tantárgyfelosztás mentésre került", Duration = 4000 });
+        else
+            ShowNotification(new NotificationMessage() { Severity = NotificationSeverity.Error, Summary = "Sikertelen importálás", Detail = "A tantárgyfelosztás nem lett elmentve.", Duration = 4000 });
     }
     private async void AlgStartAsync()
     {
-        await gaService.RunGAAsync();
+        runGASuccess = await gaService.RunGAAsync();
+        if (runGASuccess)
+            ShowNotification(new NotificationMessage() { Severity = NotificationSeverity.Success, Summary = "Sikeres futtatás", Detail = "Az órarend elkészült", Duration = 4000 });
+        else
+            ShowNotification(new NotificationMessage() { Severity = NotificationSeverity.Error, Summary = "Sikertelen futtatás", Detail = "Az órarend elkészítése sikertelen", Duration = 4000 });
+
+    }
+    async void ShowNotification(NotificationMessage message)
+    {
+        notificationService.Notify(message);
+
+        events.Add(DateTime.Now, $"{message.Severity} notification");
+        await InvokeAsync(() => { StateHasChanged(); });
     }
 
   

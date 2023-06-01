@@ -32,6 +32,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+builder.Services.AddScoped<NotificationService>();
 
 //add repositories
 builder.Services.AddScoped<TeacherRepository>();
