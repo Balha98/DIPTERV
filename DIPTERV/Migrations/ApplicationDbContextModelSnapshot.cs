@@ -131,9 +131,6 @@ namespace DIPTERV.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("Day", "LessonNumber")
-                        .IsUnique();
-
                     b.ToTable("TimeBlocks");
                 });
 

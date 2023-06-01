@@ -23,7 +23,7 @@ namespace DIPTERV.Data
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
-        static int nextId = 0;
+        public static int nextId = 0;
         public Day Day { get; set; }
         public int LessonNumber { get; set; }
 

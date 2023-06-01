@@ -13,7 +13,7 @@ namespace DIPTERV.Data
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
-        static int nextId = 0;
+        public static int nextId = 0;
         public string Name { get; set; }
 
         public int HeadMasterId { get; set; }

@@ -20,7 +20,7 @@ builder.Services.AddDbContextFactory<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 // DI
-builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer());
+//builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer());
 
 // enable displaying database-related exceptions
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -48,7 +48,7 @@ builder.Services.AddScoped<TeacherService>();
 builder.Services.AddScoped<SubjectDivisionService>();
 builder.Services.AddScoped<RoomService>();
 builder.Services.AddScoped<SchoolClassService>();
-builder.Services.AddScoped<GeneticAlgorithmService>();
+builder.Services.AddTransient<GeneticAlgorithmService>();
 builder.Services.AddScoped<FreeBlockService>();
 builder.Services.AddScoped<TimetableService>();
 

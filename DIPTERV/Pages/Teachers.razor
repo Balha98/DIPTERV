@@ -15,15 +15,14 @@
 }
 else
 {
-
-    <RadzenDataGrid Data="@teachers" TItem="Teacher">
+    <RadzenDataGrid Data="@teachers" TItem="Teacher" AllowColumnResize="true" AllowSorting="true">
         <Columns>
-            <RadzenDataGridColumn TItem="Teacher" Property="ID" Title="Azonosító" />
+            <RadzenDataGridColumn TItem="Teacher" Property="ID" Title="Azonosító" Width="160px" TextAlign="TextAlign.Center" />
             <RadzenDataGridColumn TItem="Teacher" Property="Name" Title="Név" />
-            <RadzenDataGridColumn TItem="Teacher" Property="CourseNumber" Title="Heti óraszám" />
+            <RadzenDataGridColumn TItem="Teacher" Property="CourseNumber" Title="Heti óraszám" Width="160px" />
             <RadzenDataGridColumn TItem="Teacher" Title="Elérhetőség">
                 <Template Context="teacher">
-                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@(() => ButtonClick(teacher))"/>
+                <RadzenButton Icon="event_busy" ButtonStyle="Radzen.ButtonStyle.Success" Variant="Radzen.Variant.Filled" Size="Radzen.ButtonSize.Large" Click="@(() => ButtonClick(teacher))" IsBusy="false" Visible="true" Shade="Radzen.Shade.Default"/>
                 </Template>
             </RadzenDataGridColumn>
         </Columns>

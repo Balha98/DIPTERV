@@ -3,9 +3,11 @@ using DIPTERV.Data;
 using DIPTERV.Logic;
 using DIPTERV.Pages;
 using DIPTERV.Repositories;
+using Humanizer;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
+using System.Collections.Generic;
 
 namespace DIPTERV.Services
 {
@@ -16,17 +18,22 @@ namespace DIPTERV.Services
 
         CourseRepository _courseRepo;
 
-        public static List<Teacher> Teachers { get; set; }
-        public static List<Room> Rooms { get; set; }
-        public static List<SubjectDivision> SubjectDivisions { get; set; }
-        public static List<SchoolClass> SchoolClasses { get; set; }
+        public List<Teacher> Teachers { get; set; }
+        public List<Room> Rooms { get; set; }
+        public List<SubjectDivision> SubjectDivisions { get; set; }
+        public List<SchoolClass> SchoolClasses { get; set; }
 
-        public static List<TimeBlock> TimeBlocks { get; set; }
+        public List<TimeBlock> TimeBlocks { get; set; }
 
         public GeneticAlgorithmService(IDbContextFactory<ApplicationDbContext> factory, CourseRepository courseRepository)
         {
             _factory = factory;
             _courseRepo = courseRepository;
+        }
+
+
+        public async Task<bool> ImportExcelFileAsync(InputFileChangeEventArgs e)
+        {
 
             Teachers = new List<Teacher>();
             Rooms = new List<Room>();
@@ -34,11 +41,6 @@ namespace DIPTERV.Services
             SchoolClasses = new List<SchoolClass>();
             TimeBlocks = new List<TimeBlock>();
 
-        }
-
-
-        public async Task<bool> ImportExcelFileAsync(InputFileChangeEventArgs e)
-        {
             foreach (var file in e.GetMultipleFiles(1))
             {
                 try
@@ -65,8 +67,8 @@ namespace DIPTERV.Services
                             var r_end = r_ews.Dimension.End;
 
 
-                           
-                            
+
+
                             for (int col = 3; col <= t_end.Column; col++)
                             {
                                 TimeBlocks.Add(new TimeBlock(GetDay(t_ews.Cells[1, col].Text), Int32.Parse(t_ews.Cells[2, col].Text)));
@@ -78,7 +80,7 @@ namespace DIPTERV.Services
                                 //Teacher's name
                                 string t_name = t_ews.Cells[row, 1].Text.Trim();
 
-                                
+
                                 //Free and All Timeblocks for teacher
                                 var free_tb = new List<TimeBlock>();
                                 for (int col = 3; col <= t_end.Column; col++)
@@ -88,8 +90,8 @@ namespace DIPTERV.Services
                                         free_tb.Add(TimeBlocks[col - 3]);
                                     //free_tb.Add(new TimeBlock(GetDay(t_ews.Cells[1, col].Text), Int32.Parse(t_ews.Cells[2, col].Text)));
                                 }
-                                                   
-                                    var act_teacher = new Teacher(t_name, free_tb);
+
+                                var act_teacher = new Teacher(t_name, free_tb);
                                 Teachers.Add(act_teacher);
 
                                 //SchoolClasses
@@ -135,23 +137,28 @@ namespace DIPTERV.Services
                             using (var context = _factory.CreateDbContext())
                             {
                                 //Delete existing data
-                                var table = context.Set<TimeBlock>();
-                                table.RemoveRange(table);
-                                var table1 = context.Set<Teacher>();
-                                table1.RemoveRange(table1);
-                                var table2 = context.Set<SubjectDivision>();
-                                table2.RemoveRange(table2);
-                                var table3 = context.Set<SchoolClass>();
-                                table3.RemoveRange(table3);
-                                context.Database.ExecuteSqlRaw("DELETE FROM Rooms");
-                                context.Database.ExecuteSqlRaw("DELETE FROM Courses");
-                                context.Database.ExecuteSqlRaw("DELETE FROM TeacherTimeBlock");
-                                context.SaveChanges();
+                                await context.Courses.ExecuteDeleteAsync();
+                                await context.Rooms.ExecuteDeleteAsync();
+                                await context.SubjectDivisions.ExecuteDeleteAsync();
+                                await context.SchoolClasses.ExecuteDeleteAsync();
+                                await context.Teachers.ExecuteDeleteAsync();
+                                await context.TimeBlocks.ExecuteDeleteAsync();
                                 
+                                
+                                await context.Database.ExecuteSqlRawAsync("Truncate table TeacherTimeBlock");
+                                Course.nextId = 0;
+                                Room.nextId = 0;
+                                SchoolClass.nextId = 0;
+                                SubjectDivision.nextId = 0;
+                                Teacher.nextId = 0;
+                                TimeBlock.nextId = 0;
+
+                             
+
                                 //add new data
                                 await context.SubjectDivisions.AddRangeAsync(SubjectDivisions.ToArray());
                                 await context.Rooms.AddRangeAsync(Rooms.ToArray());
-                                await context.Teachers.AddRangeAsync(Teachers.ToArray());
+                               await context.Teachers.AddRangeAsync(Teachers);
                                 await context.SaveChangesAsync();
                                 return true;
                             }

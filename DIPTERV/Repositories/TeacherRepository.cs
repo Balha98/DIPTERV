@@ -21,7 +21,7 @@ namespace DIPTERV.Repositories
         public async Task<Teacher[]> GetAllTeacherAsync()
         {
             using var context = _factory.CreateDbContext();
-            return await context.Teachers.ToArrayAsync();
+            return await context.Teachers.Include(t => t.FreeBlocks).ToArrayAsync();
         }
 
         public async Task InsertTeacherAsync(Teacher teacher)

@@ -1,7 +1,9 @@
-﻿@using DIPTERV.Data;
+@using DIPTERV.Data;
 @using DIPTERV.Services;
 
 @inject FreeBlockService freeBlockService;
+@inject TeacherService teacherService;
+
 
 @if (freeTimeBlockIDs == null)
 {
@@ -10,49 +12,86 @@
 
 else
 {
-
-<div class="dialog-container">
-    <div class="dialog">
-        <div class="dialog-title">
-            <h2>@teacher.Name</h2>
-        </div>
-        <table class="table">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Hétfő</th>
-                <th>Kedd</th>
-                <th>Szerda</th>
-                <th>Csütörtök</th>
-                <th>Péntek</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (var row = 0;row < 6; row++)
-            {
-                <tr>
-                    <td>@(row+1)</td>
-                    @for (var col = 0; col < 5; col++)
+    <div class="dialog-container">
+        <div class="dialog">
+            <div class="dialog-title">
+                <h2>@teacher.Name</h2>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Hétfő</th>
+                        <th>Kedd</th>
+                        <th>Szerda</th>
+                        <th>Csütörtök</th>
+                        <th>Péntek</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int row = 0; row < 6; row++)
                     {
-                            @if (freeTimeBlockIDs.Contains((col * 5) + row))
+                        <tr>
+                            <td>@(row + 1)</td>
+                            @for (int col = 0; col < 5; col++)
                             {
-                            <td>SZABAD </td>
-                             } 
-                            else 
-                            {
-                            <td>FOGLALT </td>
-                            }
-                    }
-                </tr>
-            }
-        </tbody>
-        </table>
+                                int actindex = (col * 5) + row;
 
-        <div class="dialog-buttons">
-                <button class="btn btn-secondary mr-auto" @onclick="OnOK">Bezár</button>
+                                @if (!editing)
+                                {
+
+                                    @if (freeTimeBlockIDs.Contains((col * 5) + row))
+                                    {
+
+                                        <td> <RadzenIcon Icon="done" Style="color: #02f900" /> </td>
+
+                                    }
+                                    else
+                                    {
+                                        <td> <RadzenIcon Icon="clear" Style="color: #ff2800" /> </td>
+                                    }
+                                }
+                                else
+                                {
+
+
+                                    @if (newFTB[(col * 5) + row] == Busyness.free)
+                                    {
+
+                                        <td>
+                                            <RadzenButton Icon="done" ButtonStyle="Radzen.ButtonStyle.Success" Variant="Radzen.Variant.Filled" Click="@(() => ChangeBusyness(actindex))" IsBusy="false" Visible="true" />
+                                        </td>
+
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <RadzenButton Icon="clear" ButtonStyle="Radzen.ButtonStyle.Danger" Variant="Radzen.Variant.Filled" Click="@(() => ChangeBusyness(actindex))" IsBusy="false" Visible="true" />
+                                        </td>
+                                    }
+                                }
+
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @if (!editing)
+            {
+                <div class="dialog-buttons">
+                    <button class="btn btn-secondary mr-auto" @onclick="OnOK">Bezár</button>
+                    <button class="btn btn-secondary mr-auto" @onclick="@OnEdit">Szerkesztés</button>
+                </div>
+            }
+            else
+            {
+                <div class="dialog-buttons">
+                    <button class="btn btn-secondary mr-auto" @onclick="@OnEdit">Mégse</button>
+                    <button class="btn btn-secondary ml-auto" @onclick="@OnSave">Mentés</button>
+                </div>
+            }
         </div>
     </div>
-</div>
 
 }
 
@@ -61,10 +100,53 @@ else
     [Parameter] public EventCallback OnOK { get; set; }
 
     int[] freeTimeBlockIDs;
+    bool editing;
+
+    Busyness[] originalFTB = new Busyness[30];
+    Busyness[] newFTB = new Busyness[30];
+
+    public enum Busyness
+    {
+        busy,
+        free
+    }
+
 
     protected override async Task OnInitializedAsync()
     {
         freeTimeBlockIDs = await freeBlockService.GetFreeTimeBlockIDsByTeacherIDAsync(teacher.ID);
+        for (var i = 0; i < 30; i++)
+            if (freeTimeBlockIDs.Contains(i))
+            {
+                originalFTB[i] = Busyness.free;
+                newFTB[i] = Busyness.free;
+            }
+            else
+            {
+                originalFTB[i] = Busyness.busy;
+                newFTB[i] = Busyness.busy;
+            }
+
+
     }
+    private void OnEdit()
+    {
+        editing = !editing;
+    }
+
+    private void ChangeBusyness(int actindex)
+    {
+
+        if (newFTB[actindex] == Busyness.free)
+            newFTB[actindex] = Busyness.busy;
+        else
+            newFTB[actindex] = Busyness.free;
+    }
+
+    private void OnSave()
+    {
+        editing = !editing;
+    }
+
 
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DIPTERV.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class initFinal : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,6 +48,20 @@ namespace DIPTERV.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false),
+                    RoomId = table.Column<int>(type: "int", nullable: false),
+                    SubjectDivisinId = table.Column<int>(type: "int", nullable: false),
+                    TimeBlockId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -261,35 +275,6 @@ namespace DIPTERV.Migrations
                         principalColumn: "ID");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Courses",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false),
-                    RoomId = table.Column<int>(type: "int", nullable: false),
-                    SubjectDivisinId = table.Column<int>(type: "int", nullable: false),
-                    TimeBlockId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Courses", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Courses_Rooms_RoomId",
-                        column: x => x.RoomId,
-                        principalTable: "Rooms",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_Courses_SubjectDivisions_SubjectDivisinId",
-                        column: x => x.SubjectDivisinId,
-                        principalTable: "SubjectDivisions",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_Courses_TimeBlocks_TimeBlockId",
-                        column: x => x.TimeBlockId,
-                        principalTable: "TimeBlocks",
-                        principalColumn: "ID");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -328,21 +313,6 @@ namespace DIPTERV.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Courses_RoomId",
-                table: "Courses",
-                column: "RoomId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Courses_SubjectDivisinId",
-                table: "Courses",
-                column: "SubjectDivisinId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Courses_TimeBlockId",
-                table: "Courses",
-                column: "TimeBlockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SchoolClasses_HeadMasterId",
@@ -387,6 +357,12 @@ namespace DIPTERV.Migrations
                 name: "Courses");
 
             migrationBuilder.DropTable(
+                name: "Rooms");
+
+            migrationBuilder.DropTable(
+                name: "SubjectDivisions");
+
+            migrationBuilder.DropTable(
                 name: "TeacherTimeBlock");
 
             migrationBuilder.DropTable(
@@ -396,16 +372,10 @@ namespace DIPTERV.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Rooms");
-
-            migrationBuilder.DropTable(
-                name: "SubjectDivisions");
+                name: "SchoolClasses");
 
             migrationBuilder.DropTable(
                 name: "TimeBlocks");
-
-            migrationBuilder.DropTable(
-                name: "SchoolClasses");
 
             migrationBuilder.DropTable(
                 name: "Teachers");

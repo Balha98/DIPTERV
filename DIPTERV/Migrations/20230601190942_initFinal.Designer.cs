@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DIPTERV.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230529162648_Init")]
-    partial class Init
+    [Migration("20230601190942_initFinal")]
+    partial class initFinal
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,12 +40,6 @@ namespace DIPTERV.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("RoomId");
-
-                    b.HasIndex("SubjectDivisinId");
-
-                    b.HasIndex("TimeBlockId");
 
                     b.ToTable("Courses");
                 });
@@ -358,33 +352,6 @@ namespace DIPTERV.Migrations
                     b.HasIndex("TeacherID");
 
                     b.ToTable("TeacherTimeBlock");
-                });
-
-            modelBuilder.Entity("DIPTERV.Data.Course", b =>
-                {
-                    b.HasOne("DIPTERV.Data.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DIPTERV.Data.SubjectDivision", "SubjectDivision")
-                        .WithMany()
-                        .HasForeignKey("SubjectDivisinId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DIPTERV.Data.TimeBlock", "TimeBlock")
-                        .WithMany()
-                        .HasForeignKey("TimeBlockId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Room");
-
-                    b.Navigation("SubjectDivision");
-
-                    b.Navigation("TimeBlock");
                 });
 
             modelBuilder.Entity("DIPTERV.Data.SchoolClass", b =>
