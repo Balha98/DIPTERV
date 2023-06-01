@@ -38,8 +38,8 @@ namespace DIPTERV.Logic
         var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutation);
         //ga.Termination = new FitnessStagnationTermination(100);
         ga.Termination = new OrTermination( new FitnessThresholdTermination(0), new FitnessStagnationTermination(20));
-            ga.MutationProbability = 0.9f;
-            ga.CrossoverProbability = 0.9f;
+            ga.MutationProbability = 0.6f;
+            ga.CrossoverProbability = 0.6f;
             ga.Reinsertion = new ElitistReinsertion();
         ga.GenerationRan += (s, e) => Console.WriteLine($"Generation {ga.GenerationsNumber}. (ga.BestChromosome.Fitness.Value): {((Schedule)ga.BestChromosome).Fitness.Value}, fitness.Evaluate(ga.BestChromosome): {fitness.Evaluate(ga.BestChromosome)}");
 

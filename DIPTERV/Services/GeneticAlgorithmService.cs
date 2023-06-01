@@ -15,22 +15,29 @@ namespace DIPTERV.Services
         private readonly IDbContextFactory<ApplicationDbContext> _factory;
 
         CourseRepository _courseRepo;
-        public GeneticAlgorithmService(IDbContextFactory<ApplicationDbContext> factory, CourseRepository courseRepository)
-        {
-            _factory = factory;
-            _courseRepo = courseRepository;
-        }
 
         public static List<Teacher> Teachers { get; set; }
-
         public static List<Room> Rooms { get; set; }
-
         public static List<SubjectDivision> SubjectDivisions { get; set; }
         public static List<SchoolClass> SchoolClasses { get; set; }
 
         public static List<TimeBlock> TimeBlocks { get; set; }
 
-        public async Task ImportExcelFileAsync(InputFileChangeEventArgs e)
+        public GeneticAlgorithmService(IDbContextFactory<ApplicationDbContext> factory, CourseRepository courseRepository)
+        {
+            _factory = factory;
+            _courseRepo = courseRepository;
+
+            Teachers = new List<Teacher>();
+            Rooms = new List<Room>();
+            SubjectDivisions = new List<SubjectDivision>();
+            SchoolClasses = new List<SchoolClass>();
+            TimeBlocks = new List<TimeBlock>();
+
+        }
+
+
+        public async Task<bool> ImportExcelFileAsync(InputFileChangeEventArgs e)
         {
             foreach (var file in e.GetMultipleFiles(1))
             {
@@ -42,8 +49,6 @@ namespace DIPTERV.Services
                         await file.OpenReadStream().CopyToAsync(ms);
                         // positions the cursor at the beginning of the memory stream
                         ms.Position = 0;
-
-                        Init();
 
                         // create ExcelPackage from memory stream
                         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -139,8 +144,7 @@ namespace DIPTERV.Services
                                 var table3 = context.Set<SchoolClass>();
                                 table3.RemoveRange(table3);
                                 context.Database.ExecuteSqlRaw("DELETE FROM Rooms");
-                                var table5 = context.Set<Course>();
-                                table5.RemoveRange(table5);
+                                context.Database.ExecuteSqlRaw("DELETE FROM Courses");
                                 context.Database.ExecuteSqlRaw("DELETE FROM TeacherTimeBlock");
                                 context.SaveChanges();
                                 
@@ -149,6 +153,7 @@ namespace DIPTERV.Services
                                 await context.Rooms.AddRangeAsync(Rooms.ToArray());
                                 await context.Teachers.AddRangeAsync(Teachers.ToArray());
                                 await context.SaveChangesAsync();
+                                return true;
                             }
 
                         }
@@ -159,28 +164,26 @@ namespace DIPTERV.Services
                     throw;
                 }
             }
+            return false;
 
         }
 
-        public async Task RunGAAsync()
+        public async Task<bool> RunGAAsync()
         {
+            using var context = _factory.CreateDbContext();
+            if (!context.Rooms.Any() || !context.SubjectDivisions.Any() || !context.TimeBlocks.Any() || !context.Teachers.Any() || !context.SchoolClasses.Any())
+                return false;
+
+            Rooms = await context.Rooms.ToListAsync();
+            SubjectDivisions = await context.SubjectDivisions.Include(sd => sd.SchoolClass).Include(sd => sd.Teacher).ToListAsync();
+            TimeBlocks = await context.TimeBlocks.ToListAsync();
+            Teachers = await context.Teachers.Include(t => t.FreeBlocks).ToListAsync();
+
             var sga = new ScheduleGeneticAlgorithm(Rooms, SubjectDivisions, TimeBlocks, Teachers);
             var courses = sga.RunGA().ToArray();
             await _courseRepo.DeleteAllCoursesAsync();
             await _courseRepo.InsertAllCoursesAsync(courses);
-            return;
-        }
-
-        private static void Init()
-        {
-            Teachers = new List<Teacher>();
-            Rooms = new List<Room>();
-
-            SubjectDivisions = new List<SubjectDivision>();
-
-            SchoolClasses = new List<SchoolClass>();
-
-            TimeBlocks = new List<TimeBlock>();
+            return true;
         }
 
         private static Day GetDay(string text)
