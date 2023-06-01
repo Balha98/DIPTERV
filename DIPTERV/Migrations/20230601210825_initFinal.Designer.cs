@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DIPTERV.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230601190942_initFinal")]
+    [Migration("20230601210825_initFinal")]
     partial class initFinal
     {
         /// <inheritdoc />
@@ -66,7 +66,8 @@ namespace DIPTERV.Migrations
                     b.Property<int>("ID")
                         .HasColumnType("int");
 
-                    b.Property<int>("HeadMasterId")
+                    b.Property<int?>("HeadMasterId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -85,14 +86,16 @@ namespace DIPTERV.Migrations
                     b.Property<int>("ID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SchoolClassId")
+                    b.Property<int?>("SchoolClassId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Subject")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TeacherId")
+                    b.Property<int?>("TeacherId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("ID");

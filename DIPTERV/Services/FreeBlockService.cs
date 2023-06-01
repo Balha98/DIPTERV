@@ -23,5 +23,6 @@ namespace DIPTERV.Services
         {
             return await _timeBlockRepo.GetAllTimeBlocksAsync();
         }
+
     }
 }

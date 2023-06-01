@@ -1,8 +1,12 @@
 @using DIPTERV.Data;
 @using DIPTERV.Services;
+@using DIPTERV.Context;
+@using Microsoft.EntityFrameworkCore
 
 @inject FreeBlockService freeBlockService;
 @inject TeacherService teacherService;
+
+@inject IDbContextFactory<ApplicationDbContext> _factory
 
 
 @if (freeTimeBlockIDs == null)
@@ -101,6 +105,7 @@ else
 
     int[] freeTimeBlockIDs;
     bool editing;
+    TimeBlock[] timeBlocks;
 
     Busyness[] originalFTB = new Busyness[30];
     Busyness[] newFTB = new Busyness[30];
@@ -114,6 +119,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        timeBlocks = await freeBlockService.GetTimeBlocksAsync();
         freeTimeBlockIDs = await freeBlockService.GetFreeTimeBlockIDsByTeacherIDAsync(teacher.ID);
         for (var i = 0; i < 30; i++)
             if (freeTimeBlockIDs.Contains(i))
@@ -143,9 +149,35 @@ else
             newFTB[actindex] = Busyness.free;
     }
 
-    private void OnSave()
+    private async void OnSave()
     {
+        using var context = _factory.CreateDbContext();
+
+        context.Attach(teacher);
+
+        for (var i = 0; i < 30; i++)
+        {
+            //sth changed
+            if (newFTB[i] != originalFTB[i])
+            {
+                //if free -> busy : remove
+                if (originalFTB[i] == Busyness.free)
+                {
+                    await context.Database.ExecuteSqlRawAsync($"DELETE FROM [TeacherTimeBlock] WHERE[FreeBlocksID] = {i} AND[TeacherID] = {teacher.ID}");
+                    
+                }
+                // if busy -> free : add
+                else
+                {
+                    await context.Database.ExecuteSqlRawAsync($"INSERT INTO[TeacherTimeBlock]([FreeBlocksID], [TeacherID]) VALUES({i}, {teacher.ID})");
+                    
+                }
+            }
+
+        }
         editing = !editing;
+        freeTimeBlockIDs = await freeBlockService.GetFreeTimeBlockIDsByTeacherIDAsync(teacher.ID);
+        await InvokeAsync(() => { StateHasChanged(); });
     }
 
 

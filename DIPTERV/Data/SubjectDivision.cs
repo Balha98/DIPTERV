@@ -16,13 +16,13 @@ namespace DIPTERV.Data
         public int ID { get; set; }
         public static int nextId = 0;
 
-        public int TeacherId { get; set; }
-        public Teacher Teacher { get; set; }
+        public int? TeacherId { get; set; }
+        public Teacher? Teacher { get; set; }
         public string Subject { get; set; }
 
-        public int SchoolClassId { get; set; }
+        public int? SchoolClassId { get; set; }
         [ForeignKey("SchoolClassId")]
-        public SchoolClass SchoolClass { get; set; }
+        public SchoolClass? SchoolClass { get; set; }
 
         public SubjectDivision(Teacher teacher, string subject, SchoolClass schoolclass) : this(subject)
         {

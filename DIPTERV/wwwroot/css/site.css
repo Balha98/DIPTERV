@@ -139,6 +139,7 @@ a, .btn-link {
     align-items: center;
     background-color: #eee;
     padding: 0 1rem;
+    justify-content: space-between;
 }
 
 .dialog-body > div {

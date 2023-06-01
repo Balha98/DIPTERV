@@ -38,7 +38,7 @@ else
                                     @if (c.TimeBlockId == ((col * 6) + row))
                                     {
                                      <RadzenCard Style="padding: 10px; margin: 5px; position: sticky; float: none; visibility: visible; border-radius: 20px; border: 2px dotted #212529; background-color: #efefef; text-align: center; display: inline-grid; width: 160px; height: 110px">
-                                        @subjectDivisons[c.SubjectDivisinId].Subject.TrimEnd(digits); <br>
+                                        @subjectDivisons[c.SubjectDivisinId].Subject.TrimEnd(digits) <br>
                                         @String.Concat(subjectDivisons[c.SubjectDivisinId].SchoolClass.Name,". osztály")<br>
                                         @rooms[c.RoomId].Name
                                     </RadzenCard>

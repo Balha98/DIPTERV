@@ -18,7 +18,7 @@ namespace DIPTERV.Data
         public string Name { get; set; }
         public int CourseNumber { get; set; } = 0;
 
-        public ICollection<TimeBlock> FreeBlocks { get; set; }
+        public virtual ICollection<TimeBlock>? FreeBlocks { get; set; }
 
         public Teacher(string name, ICollection<TimeBlock> freeBlocks) : this(name)
         {

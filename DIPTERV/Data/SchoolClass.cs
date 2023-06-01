@@ -16,9 +16,9 @@ namespace DIPTERV.Data
         public static int nextId = 0;
         public string Name { get; set; }
 
-        public int HeadMasterId { get; set; }
+        public int? HeadMasterId { get; set; }
         [ForeignKey("HeadMasterId")]
-        public Teacher HeadMaster { get; set; }
+        public Teacher? HeadMaster { get; set; }
 
 
         public SchoolClass(string name, Teacher headMaster) : this(name)
