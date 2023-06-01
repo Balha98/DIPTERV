@@ -35,12 +35,12 @@ else
                             <td>@(row + 1)</td>
                             @for (int col = 0; col < 5; col++)
                             {
-                                int actindex = (col * 5) + row;
+                                int actindex = (col * 6) + row;
 
                                 @if (!editing)
                                 {
 
-                                    @if (freeTimeBlockIDs.Contains((col * 5) + row))
+                                    @if (freeTimeBlockIDs.Contains((col * 6) + row))
                                     {
 
                                         <td> <RadzenIcon Icon="done" Style="color: #02f900" /> </td>
@@ -55,7 +55,7 @@ else
                                 {
 
 
-                                    @if (newFTB[(col * 5) + row] == Busyness.free)
+                                    @if (newFTB[(col * 6) + row] == Busyness.free)
                                     {
 
                                         <td>
