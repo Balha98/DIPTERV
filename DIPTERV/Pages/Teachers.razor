@@ -15,30 +15,19 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Azonosító</th>
-                <th>Név</th>
-                <th>Heti óraszám</th>
-                <th>Elérhetőség</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var teacher in teachers)
-            {
-                <tr>
-                    <td>@teacher.ID</td>
-                    <td>@teacher.Name</td>
-                    <td>@teacher.CourseNumber</td>
-                    <td>
-                       @* <!-- <RadzenButton ButtonStyle="Radzen.ButtonStyle.Info" ButtonType="Radzen.ButtonType.Button" Icon="event_busy" IsBusy="false" Shade="Radzen.Shade.Lighter" Variant="Radzen.Variant.Filled" Style="position: static; width: 88px" Click="@(() => ButtonClick(teacher))"></RadzenButton> --> *@
-                        <button @onclick="@(() => ButtonClick(teacher))">Megtekint</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+
+    <RadzenDataGrid Data="@teachers" TItem="Teacher">
+        <Columns>
+            <RadzenDataGridColumn TItem="Teacher" Property="ID" Title="Azonosító" />
+            <RadzenDataGridColumn TItem="Teacher" Property="Name" Title="Név" />
+            <RadzenDataGridColumn TItem="Teacher" Property="CourseNumber" Title="Heti óraszám" />
+            <RadzenDataGridColumn TItem="Teacher" Title="Elérhetőség">
+                <Template Context="teacher">
+                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@(() => ButtonClick(teacher))"/>
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
 }
 
 @if (showingBusyDialog)
