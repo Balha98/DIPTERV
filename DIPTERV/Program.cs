@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Radzen;
-using Microsoft.OpenApi.Models;
 using DIPTERV.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,6 +50,13 @@ builder.Services.AddScoped<SchoolClassService>();
 builder.Services.AddTransient<GeneticAlgorithmService>();
 builder.Services.AddScoped<FreeBlockService>();
 builder.Services.AddScoped<TimetableService>();
+
+//google authentication
+builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+});
 
 //Swagger services
 /*
