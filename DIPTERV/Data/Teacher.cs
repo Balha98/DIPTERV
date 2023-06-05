@@ -18,9 +18,9 @@ namespace DIPTERV.Data
         public string Name { get; set; }
         public int CourseNumber { get; set; } = 0;
 
-        public virtual ICollection<TimeBlock>? FreeBlocks { get; set; }
+        public virtual List<TimeBlock>? FreeBlocks { get; set; }
 
-        public Teacher(string name, ICollection<TimeBlock> freeBlocks) : this(name)
+        public Teacher(string name, List<TimeBlock> freeBlocks) : this(name)
         {
             FreeBlocks = freeBlocks;
             ID = nextId++;
@@ -50,7 +50,8 @@ namespace DIPTERV.Data
                    ID == other.ID &&
                    Name == other.Name &&
                    CourseNumber == other.CourseNumber &&
-                   EqualityComparer<ICollection<TimeBlock>>.Default.Equals(FreeBlocks, other.FreeBlocks);
+                   //EqualityComparer<List<TimeBlock>>.Default.Equals(FreeBlocks, other.FreeBlocks);
+                   FreeBlocks.SequenceEqual(other.FreeBlocks);
         }
 
         public override int GetHashCode()

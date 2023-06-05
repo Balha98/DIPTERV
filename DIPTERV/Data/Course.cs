@@ -35,7 +35,7 @@ namespace DIPTERV.Data
             SubjectDivision = sd;
             SubjectDivisinId = sd.ID;
             TimeBlock = tb;
-            TimeBlockId = tb.ID; ;
+            TimeBlockId = tb.ID;
             ID = nextId++;
         }
         

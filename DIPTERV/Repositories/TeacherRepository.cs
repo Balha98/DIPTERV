@@ -12,7 +12,7 @@ namespace DIPTERV.Repositories
             _factory = factory;
         }
 
-        public async Task<Teacher> GetTeacherByIdAsync(int id)
+        public async Task<Teacher?> GetTeacherByIdAsync(int id)
         {
             using var context = _factory.CreateDbContext();
             return await context.Teachers.Include(t => t.FreeBlocks).FirstOrDefaultAsync(t => t.ID == id);
@@ -37,13 +37,6 @@ namespace DIPTERV.Repositories
 
             context.Teachers.AddRange(teachers);
 
-            await context.SaveChangesAsync();
-        }
-
-        public async Task UpdateTeacherAsync(Teacher teacher)
-        {
-            using var context = _factory.CreateDbContext();
-            context.Teachers.Update(teacher);
             await context.SaveChangesAsync();
         }
     }

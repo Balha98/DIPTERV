@@ -29,7 +29,7 @@ namespace DIPTERV.Repositories
         public async Task DeleteAllCoursesAsync()
         {
             using var context = _factory.CreateDbContext();
-            await context.Database.ExecuteSqlRawAsync("DELETE FROM Courses");
+            await context.Database.ExecuteSqlRawAsync("Truncate Table Courses");
         }
     }
 }

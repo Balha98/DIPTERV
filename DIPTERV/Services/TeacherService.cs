@@ -21,9 +21,6 @@ namespace DIPTERV.Services
         {
             return await _repo.GetAllTeacherAsync();
         }
-        public async Task UpdateTeacherAsync(Teacher teacher)
-        {
-            await _repo.UpdateTeacherAsync(teacher);
-        }
+
     }
 }

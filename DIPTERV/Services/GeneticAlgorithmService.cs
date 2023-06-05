@@ -41,6 +41,13 @@ namespace DIPTERV.Services
             SchoolClasses = new List<SchoolClass>();
             TimeBlocks = new List<TimeBlock>();
 
+            Course.nextId = 0;
+            Room.nextId = 0;
+            SchoolClass.nextId = 0;
+            SubjectDivision.nextId = 0;
+            Teacher.nextId = 0;
+            TimeBlock.nextId = 0;
+
             foreach (var file in e.GetMultipleFiles(1))
             {
                 try
@@ -146,12 +153,7 @@ namespace DIPTERV.Services
                                 
                                 
                                 await context.Database.ExecuteSqlRawAsync("Truncate table TeacherTimeBlock");
-                                Course.nextId = 0;
-                                Room.nextId = 0;
-                                SchoolClass.nextId = 0;
-                                SubjectDivision.nextId = 0;
-                                Teacher.nextId = 0;
-                                TimeBlock.nextId = 0;
+
 
                              
 
