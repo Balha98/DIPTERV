@@ -58,14 +58,6 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
     googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 });
 
-//Swagger services
-/*
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "DIPTERV API", Description = "TimeTable Scheduler For You", Version = "v1" });
-});
-*/
 
 var app = builder.Build();
 
