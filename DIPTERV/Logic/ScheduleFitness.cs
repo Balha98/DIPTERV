@@ -31,27 +31,28 @@ namespace DIPTERV.Logic
             return Penalise();
         }
 
-        public void PrintAllEvaluate(IChromosome chromosome)
-        {
-            courses.Clear();
-            foreach (var i in chromosome.GetGenes())
-                courses.Add((Course)i.Value);
-            //hard constraints
-            //Console.WriteLine($"MoreThanOneSubjectDivison(): {MoreThanOneSubjectDivison()}");
-            //Console.WriteLine($"SubjectDivisionMissing(): {SubjectDivisionMissing()}");
-            Console.WriteLine($"MoreThanOneTimeBlockinaRoomAtTheSameTime(): {MoreThanOneTimeBlockinaRoomAtTheSameTime()}");
-            Console.WriteLine($"TeacherMoreThanOnePlaceAtTheSameTime(): {TeacherMoreThanOnePlaceAtTheSameTime()}");
-            Console.WriteLine($"SchoolClassMoreThanOnePlaceAtTheSameTime(): {SchoolClassMoreThanOnePlaceAtTheSameTime()}");
-            Console.WriteLine($"TeacherNotAvailable(): {TeacherNotAvailable()}");
+    public void PrintAllEvaluate(IChromosome chromosome)
+    {
+      courses.Clear();
+      foreach (var i in chromosome.GetGenes())
+        courses.Add((Course)i.Value);
+      //hard constraints
+      //Console.WriteLine($"MoreThanOneSubjectDivison(): {MoreThanOneSubjectDivison()}");
+      //Console.WriteLine($"SubjectDivisionMissing(): {SubjectDivisionMissing()}");
+      Console.WriteLine($"MoreThanOneTimeBlockinaRoomAtTheSameTime(): {MoreThanOneTimeBlockinaRoomAtTheSameTime()}");
+      Console.WriteLine($"TeacherMoreThanOnePlaceAtTheSameTime(): {TeacherMoreThanOnePlaceAtTheSameTime()}");
+      Console.WriteLine($"SchoolClassMoreThanOnePlaceAtTheSameTime(): {SchoolClassMoreThanOnePlaceAtTheSameTime()}");
+      Console.WriteLine($"TeacherNotAvailable(): {TeacherNotAvailable()}");
 
 
-            //helper
-            //result -= NotUniversalTB();
+      //helper
+      //result -= NotUniversalTB();
 
-            //soft constraints
-            //result -= TeacherScheduleHoles();
-            //result -= SubjectsNotDistributed();
-            //result -= DayStartsWithEasySubjects();
+      //soft constraints
+      
+      //Console.WriteLine($"TeacherScheduleHoles(): {TeacherScheduleHoles()}");
+      //Console.WriteLine($"SubjectsNotDistributed(): {SubjectsNotDistributed()}");
+      //Console.WriteLine($"DayStartsWithEasySubjects(): {DayStartsWithEasySubjects()}");
         }
 
         private double Penalise()
@@ -250,7 +251,7 @@ namespace DIPTERV.Logic
                     else
                     {
                         //TODO: make it exponential
-                        actSchoolClassFaults += subjectOccupancy.Where(x => x.Value > 1).Sum(x => x.Value - 1);
+                        actSchoolClassFaults += Math.Pow(subjectOccupancy.Where(x => x.Value > 1).Sum(x => x.Value - 1),2);
                         subjectOccupancy.Clear();
                         //add the first course on that day to the dictionary
                         subjectOccupancy[orderedCourses[i].SubjectDivision.Subject.TrimEnd(digits)] = 1;

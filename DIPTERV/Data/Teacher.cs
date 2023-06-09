@@ -51,7 +51,20 @@ namespace DIPTERV.Data
                    Name == other.Name &&
                    CourseNumber == other.CourseNumber &&
                    //EqualityComparer<List<TimeBlock>>.Default.Equals(FreeBlocks, other.FreeBlocks);
-                   FreeBlocks.SequenceEqual(other.FreeBlocks);
+                   BothNullOrEquals(FreeBlocks,other.FreeBlocks);
+        }
+
+        public static bool BothNullOrEquals<T>(IEnumerable<T> left, IEnumerable<T> right)
+        {
+            if (left == null && right == null)
+            {
+                return true;
+            }
+            if (left != null && right != null)
+            {
+                return left.SequenceEqual(right);
+            }
+            return false;
         }
 
         public override int GetHashCode()

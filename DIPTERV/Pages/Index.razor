@@ -1,12 +1,44 @@
 @page "/"
 
+@using DIPTERV.Context;
+@using DIPTERV.Data
+@using DIPTERV.Services;
+@using Microsoft.EntityFrameworkCore
+
+@inject SchoolClassService schoolClassService
+
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Üdvözöllek az Órarend Alkalmazásban!</h1>
 
-Welcome to your new app.
+<h3>Az iskolában található osztályok:</h3>
+@if (schoolClasses == null)
+{
+    <p><em>Még nem töltöttél fel tantárgyfelosztás.</em></p>
+}
+else
+{
+    <RadzenDataGrid Data="@schoolClasses" TItem="SchoolClass" AllowColumnResize="true" AllowSorting="true">
+    <Columns>
+            <RadzenDataGridColumn TItem="SchoolClass" Property="ID" Title="Azonosító" TextAlign="TextAlign.Center" />
+        <RadzenDataGridColumn TItem="SchoolClass" Property="Name" Title="Osztály neve">
+            <Template Context="schoolClass">
+                    <RadzenText> @String.Concat(schoolClass.Name,". osztály")</RadzenText>
+                </Template>
+        </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="SchoolClass" Property="HeadMaster.Name" Title="Osztályfõnök neve" />
 
-<RadzenButton Text="@text"></RadzenButton>
+    </Columns>
+</RadzenDataGrid>
+}
+
 @code {
-    string text = "Hi";
+    private SchoolClass[]? schoolClasses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        schoolClasses = await schoolClassService.GetAllSchoolClassesAsync();
+
+    }
+
 }

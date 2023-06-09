@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DIPTERV.Services.FreeBlockService">
+    <Position X="4.5" Y="2" Width="1.5" />
+    <AssociationLine Name="_timeBlockRepo" Type="DIPTERV.Repositories.TimeBlockRepository">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.012" Y="0.41" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="_teacherRepo" Type="DIPTERV.Repositories.TeacherRepository" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.75" Y="3.488" />
+        <Point X="4.75" Y="4.406" />
+        <Point X="3.697" Y="4.406" />
+        <Point X="3.697" Y="6" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.391" Y="1.182" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAABCAAAAAACAAAA=</HashCode>
+      <FileName>Services\FreeBlockService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_timeBlockRepo" />
+      <Field Name="_teacherRepo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DIPTERV.Services.GeneticAlgorithmService">
+    <Position X="11.5" Y="5.75" Width="2" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="_courseRepo" Type="DIPTERV.Repositories.CourseRepository">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.706" Y="1.149" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAEAAAACAAAAAAAAAgKCAgAAAAM=</HashCode>
+      <FileName>Services\GeneticAlgorithmService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_courseRepo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DIPTERV.Services.RoomService">
+    <Position X="10.5" Y="2" Width="1.5" />
+    <AssociationLine Name="_repo" Type="DIPTERV.Repositories.RoomRepository">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.148" Y="0.339" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Services\RoomService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_repo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DIPTERV.Services.SchoolClassService">
+    <Position X="2.75" Y="8.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\SchoolClassService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_repo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DIPTERV.Services.SubjectDivisionService">
+    <Position X="8.25" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABQAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\SubjectDivisionService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_repo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DIPTERV.Services.TeacherService">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQQAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Services\TeacherService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_repo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DIPTERV.Services.TimetableService">
+    <Position X="6.5" Y="2" Width="1.5" />
+    <AssociationLine Name="_teacherRepo" Type="DIPTERV.Repositories.TeacherRepository" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.625" Y="4.065" />
+        <Point X="6.625" Y="4.859" />
+        <Point X="5.458" Y="4.859" Type="JumpStart" />
+        <Point X="5.292" Y="4.859" Type="JumpEnd" />
+        <Point X="4.208" Y="4.859" />
+        <Point X="4.208" Y="6" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.59" Y="1.692" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="_timeBlockRepo" Type="DIPTERV.Repositories.TimeBlockRepository" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.758" Y="4.065" />
+        <Point X="6.758" Y="5.252" />
+        <Point X="5.875" Y="5.252" />
+        <Point X="5.875" Y="6" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.979" Y="0.81" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="_courseRepo" Type="DIPTERV.Repositories.CourseRepository" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.812" Y="4.065" />
+        <Point X="7.812" Y="4.836" />
+        <Point X="8.667" Y="4.836" Type="JumpStart" />
+        <Point X="8.833" Y="4.836" Type="JumpEnd" />
+        <Point X="10.667" Y="4.836" Type="JumpStart" />
+        <Point X="10.833" Y="4.836" Type="JumpEnd" />
+        <Point X="11.201" Y="4.836" />
+        <Point X="11.201" Y="9.508" />
+        <Point X="11.75" Y="9.508" />
+        <Point X="11.75" Y="9.438" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.588" Y="0.098" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="_subjectDivisionRepo" Type="DIPTERV.Repositories.SubjectDivisionRepository" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.25" Y="4.065" />
+        <Point X="7.25" Y="5.468" />
+        <Point X="7.834" Y="5.468" />
+        <Point X="7.834" Y="6" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="_roomRepo" Type="DIPTERV.Repositories.RoomRepository" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.562" Y="4.065" />
+        <Point X="7.562" Y="5.197" />
+        <Point X="8.667" Y="5.197" Type="JumpStart" />
+        <Point X="8.833" Y="5.197" Type="JumpEnd" />
+        <Point X="10.25" Y="5.197" />
+        <Point X="10.25" Y="6" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAgACAAAAAAQAAAAAAACAAABAEAAAABCAAAAAACAAAI=</HashCode>
+      <FileName>Services\TimetableService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_teacherRepo" />
+      <Field Name="_timeBlockRepo" />
+      <Field Name="_courseRepo" />
+      <Field Name="_subjectDivisionRepo" />
+      <Field Name="_roomRepo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DIPTERV.Repositories.CourseRepository">
+    <Position X="11.75" Y="9.25" Width="1.75" />
+    <AssociationLine Name="_factory" Type="Microsoft.EntityFrameworkCore.IDbContextFactory&lt;TContext&gt;" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.75" Y="10.152" />
+        <Point X="9.653" Y="10.152" />
+        <Point X="9.653" Y="9.312" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAACAAAAAAAAAAAAAAgAAAAAACAAAAAAA=</HashCode>
+      <FileName>Repositories\CourseRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_factory" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DIPTERV.Repositories.RoomRepository">
+    <Position X="9.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAABAAACAIACAAA=</HashCode>
+      <FileName>Repositories\RoomRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_factory" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DIPTERV.Repositories.SchoolClassRepository">
+    <Position X="2.75" Y="10.25" Width="2" />
+    <AssociationLine Name="_factory" Type="Microsoft.EntityFrameworkCore.IDbContextFactory&lt;TContext&gt;" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.75" Y="10.994" />
+        <Point X="8.194" Y="10.994" />
+        <Point X="8.194" Y="9.312" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAgAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Repositories\SchoolClassRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_factory" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DIPTERV.Repositories.SubjectDivisionRepository">
+    <Position X="7.25" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAACAAAAAABAAAAAAAAAAAgAAACAAAAAAA=</HashCode>
+      <FileName>Repositories\SubjectDivisionRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_factory" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DIPTERV.Repositories.TeacherRepository">
+    <Position X="2.75" Y="6" Width="1.75" />
+    <AssociationLine Name="_factory" Type="Microsoft.EntityFrameworkCore.IDbContextFactory&lt;TContext&gt;" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.625" Y="7.873" />
+        <Point X="3.625" Y="8.192" />
+        <Point X="6.631" Y="8.192" />
+        <Point X="6.631" Y="9" />
+        <Point X="7.5" Y="9" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAEQAAAAAAAAAAAAACAAAAAAI=</HashCode>
+      <FileName>Repositories\TeacherRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_factory" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DIPTERV.Repositories.TimeBlockRepository">
+    <Position X="5" Y="6" Width="1.75" />
+    <AssociationLine Name="_factory" Type="Microsoft.EntityFrameworkCore.IDbContextFactory&lt;TContext&gt;" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.75" Y="6.744" />
+        <Point X="7.125" Y="6.744" />
+        <Point X="7.125" Y="8.192" />
+        <Point X="7.847" Y="8.192" />
+        <Point X="7.847" Y="8.75" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAQCAAAAAAA=</HashCode>
+      <FileName>Repositories\TimeBlockRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_factory" />
+    </ShowAsAssociation>
+  </Class>
+  <Interface Name="Microsoft.EntityFrameworkCore.IDbContextFactory&lt;TContext&gt;" Collapsed="true">
+    <Position X="7.5" Y="8.75" Width="2.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

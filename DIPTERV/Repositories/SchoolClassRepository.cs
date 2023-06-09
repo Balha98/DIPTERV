@@ -15,7 +15,7 @@ namespace DIPTERV.Repositories
         public async Task<SchoolClass[]> GetAllSchoolClassesAsync()
         {
             using var context = _factory.CreateDbContext();
-            return await context.SchoolClasses.ToArrayAsync();
+            return await context.SchoolClasses.Include(sc => sc.HeadMaster).OrderBy(sc => sc.Name).ToArrayAsync();
         }
 
         public async Task InsertAllSchoolClassesAsync(SchoolClass[] schoolClasses)
