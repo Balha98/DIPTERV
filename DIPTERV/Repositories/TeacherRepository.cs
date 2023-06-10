@@ -7,8 +7,8 @@ namespace DIPTERV.Repositories
     public class TeacherRepository
     {
         private readonly IDbContextFactory<ApplicationDbContext> _factory;
-        public TeacherRepository(IDbContextFactory<ApplicationDbContext> factory) 
-        { 
+        public TeacherRepository(IDbContextFactory<ApplicationDbContext> factory)
+        {
             _factory = factory;
         }
 

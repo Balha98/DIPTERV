@@ -28,7 +28,7 @@ namespace DIPTERV.Logic
     {
       var selection = new ScheduleElitistSelection();
       var crossover = new ScheduleUniformCrossover();
-      var mutation = new ScheduleMutation(_subjectDivisions, _timeBlocks, _teachers);
+      var mutation = new ScheduleMutation(_subjectDivisions, _timeBlocks, _teachers,_rooms);
       var fitness = new ScheduleFitness(_subjectDivisions, _timeBlocks);
       var chromosome = new Schedule(_rooms, _subjectDivisions, _timeBlocks);
 
@@ -37,9 +37,9 @@ namespace DIPTERV.Logic
 
       var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutation);
       //ga.Termination = new FitnessStagnationTermination(100);
-      ga.Termination = new OrTermination(new FitnessThresholdTermination(0), new FitnessStagnationTermination(80));
-      ga.MutationProbability = 0.7f;
-      ga.CrossoverProbability = 0.4f;
+      ga.Termination = new OrTermination(new FitnessThresholdTermination(-100000), new FitnessStagnationTermination(40));
+      ga.MutationProbability = 0.4f;
+      ga.CrossoverProbability = 0.3f;
       ga.Reinsertion = new ElitistReinsertion();
       ga.GenerationRan += (s, e) => Console.WriteLine($"Generation {ga.GenerationsNumber}. (ga.BestChromosome.Fitness.Value): {((Schedule)ga.BestChromosome).Fitness.Value}, fitness.Evaluate(ga.BestChromosome): {fitness.Evaluate(ga.BestChromosome)}");
 
@@ -73,8 +73,8 @@ namespace DIPTERV.Logic
       Console.WriteLine($"Found perfect solution: {cnt} times out of {rounds}");
        */
 
-      PrintSchedule(ga.BestChromosome);
-      PrintScheduleForExcel(ga.BestChromosome);
+      //PrintSchedule(ga.BestChromosome);
+      //PrintScheduleForExcel(ga.BestChromosome);
       fitness.PrintAllEvaluate(ga.BestChromosome);
       Console.WriteLine($"Best solution found has fitness: {ga.BestChromosome.Fitness}");
 

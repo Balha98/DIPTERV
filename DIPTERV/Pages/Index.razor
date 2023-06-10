@@ -19,26 +19,23 @@
 else
 {
     <RadzenDataGrid Data="@schoolClasses" TItem="SchoolClass" AllowColumnResize="true" AllowSorting="true">
-    <Columns>
+        <Columns>
             <RadzenDataGridColumn TItem="SchoolClass" Property="ID" Title="Azonosító" TextAlign="TextAlign.Center" />
-        <RadzenDataGridColumn TItem="SchoolClass" Property="Name" Title="Osztály neve">
-            <Template Context="schoolClass">
+            <RadzenDataGridColumn TItem="SchoolClass" Property="Name" Title="Osztály neve">
+                <Template Context="schoolClass">
                     <RadzenText> @String.Concat(schoolClass.Name,". osztály")</RadzenText>
                 </Template>
-        </RadzenDataGridColumn>
+            </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="SchoolClass" Property="HeadMaster.Name" Title="Osztályfõnök neve" />
 
-    </Columns>
-</RadzenDataGrid>
+        </Columns>
+    </RadzenDataGrid>
 }
 
 @code {
     private SchoolClass[]? schoolClasses;
-
     protected override async Task OnInitializedAsync()
     {
         schoolClasses = await schoolClassService.GetAllSchoolClassesAsync();
-
     }
-
 }

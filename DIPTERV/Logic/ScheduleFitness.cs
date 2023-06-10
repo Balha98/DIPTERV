@@ -50,9 +50,9 @@ namespace DIPTERV.Logic
 
       //soft constraints
       
-      //Console.WriteLine($"TeacherScheduleHoles(): {TeacherScheduleHoles()}");
-      //Console.WriteLine($"SubjectsNotDistributed(): {SubjectsNotDistributed()}");
-      //Console.WriteLine($"DayStartsWithEasySubjects(): {DayStartsWithEasySubjects()}");
+      Console.WriteLine($"TeacherScheduleHoles(): {TeacherScheduleHoles()}");
+      Console.WriteLine($"SubjectsNotDistributed(): {SubjectsNotDistributed()}");
+      Console.WriteLine($"DayStartsWithEasySubjects(): {DayStartsWithEasySubjects()}");
         }
 
         private double Penalise()
@@ -71,9 +71,9 @@ namespace DIPTERV.Logic
             //result -= NotUniversalTB();
 
             //soft constraints
-            //result -= TeacherScheduleHoles();
-            //result -= SubjectsNotDistributed();
-            //result -= DayStartsWithEasySubjects();
+            result -= TeacherScheduleHoles();
+            result -= SubjectsNotDistributed();
+            result -= DayStartsWithEasySubjects();
             return result;
         }
 
