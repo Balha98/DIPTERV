@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UnitTestProject.Repositories
 {
-    public class TeacherRepositoryTest
+  public class TeacherRepositoryTest
     {
         //private ApplicationDbContext mockApplicationDbContext;
         //private IDbContextFactory<ApplicationDbContext> _factory = new TestDbContextFactory();
